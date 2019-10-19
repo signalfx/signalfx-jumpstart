@@ -7,6 +7,6 @@ module "aws" {
   source     = "./aws"
 }
 
-modue "host" {
+module "host" {
   source    = "./host"
 }
