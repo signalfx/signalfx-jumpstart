@@ -14,16 +14,24 @@ access_token = "abc123"
 
 Initialise Terraform:
 
-`terraform init`
+```
+$ terraform init
+```
 
 Review the execution plan:
 
-`terraform plan -var-file="secrets.tfvar" -var-file="terraform.tfvar"`
+```
+$ terraform plan -var-file="secrets.tfvar" -var-file="terraform.tfvar"
+```
 
 Apply the changes:
 
-`terraform apply -var-file="secrets.tfvar" -var-file="terraform.tfvar"`
+```
+$ terraform apply -var-file="secrets.tfvar" -var-file="terraform.tfvar"
+```
 
 Destory all detectors
 
-`terraform destroy -var-file="secrets.tfvar" -var-file="terraform.tfvar"`
+```
+$ terraform destroy -var-file="secrets.tfvar" -var-file="terraform.tfvar"
+```
