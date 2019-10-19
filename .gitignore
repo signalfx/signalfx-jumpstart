@@ -1,4 +1,4 @@
-secrets.tfvars
 terraform.tfstate
+terraform.tfstate.d/*
 terraform.tfstate.backup
 .terraform
