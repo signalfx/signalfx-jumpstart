@@ -10,3 +10,7 @@ module "aws" {
 module "host" {
   source    = "./host"
 }
+
+module "azure" {
+  source    = "./azure"
+}
