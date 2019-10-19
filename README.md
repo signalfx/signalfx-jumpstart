@@ -39,5 +39,5 @@ $ terraform destroy -var-file="secrets.tfvar" -var-file="terraform.tfvar"
 **NOTE:** The SignalFx Access Token and Realm can be passed via the command line e.g.
 
 ```
-terraform plan -var="access_token=abc123" -var="realm=eu0"
+$ terraform plan -var="access_token=abc123" -var="realm=eu0"
 ```
