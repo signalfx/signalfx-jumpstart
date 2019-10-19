@@ -35,3 +35,9 @@ Destory all detectors
 ```
 $ terraform destroy -var-file="secrets.tfvar" -var-file="terraform.tfvar"
 ```
+
+**NOTE:** The SignalFx Realm can be passed via the command line e.g.
+
+```
+terraform plan -var-file="secrets.tfvars" -var='realm=eu0'
+```
