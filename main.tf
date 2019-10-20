@@ -4,17 +4,17 @@ provider "signalfx" {
 }
 
 module "aws" {
-  source     = "./aws"
+  source = "./aws"
 }
 
 module "host" {
-  source    = "./host"
+  source = "./host"
 }
 
 module "azure" {
-  source    = "./azure"
+  source = "./azure"
 }
 
 module "docker" {
-  source   = "./docker"
+  source = "./docker"
 }
