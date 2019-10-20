@@ -14,3 +14,7 @@ module "host" {
 module "azure" {
   source    = "./azure"
 }
+
+module "docker" {
+  source   = "./docker"
+}
