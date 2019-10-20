@@ -35,6 +35,6 @@ detect(when(A > 80)).publish('Azure SQL DTU Consumption % is greater than 80 ove
     EOF
   rule {
         detect_label = "Azure SQL DTU Consumption % is greater than 80 over the past 10 minutes"
-        severity = "Warning"
+        severity = "Minor"
   }
 }
