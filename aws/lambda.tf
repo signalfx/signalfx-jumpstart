@@ -11,7 +11,7 @@ detect((when(errors > 10, lasting='5m'))).publish('AWS/Lambda function error rat
   }
 }
 
-resource "signalfx_detector" "lambda_error_rate" {
+resource "signalfx_detector" "lambda_Historical_runtime_error" {
     name = "[SFx] AWS/Lambda High Error Rate"
     description = "AWS/Lambda Lambda runtime greater then historical norm during the past 20 minutes"
     program_text = <<-EOF
