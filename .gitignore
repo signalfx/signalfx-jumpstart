@@ -3,3 +3,5 @@ terraform.tfstate
 terraform.tfstate.backup
 .terraform
 secret.tfvars
+terraform.tfvars
+terraform.tfvars
