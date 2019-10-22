@@ -1,13 +1,13 @@
 resource "signalfx_detector" "lambda_error_rate" {
-    name = "[SFx] AWS/Lambda High Error Rate"
-    description = "AWS/Lambda function error rate is greater than 10 for the last 5m"
-    program_text = <<-EOF
+  name         = "[SFx] AWS/Lambda High Error Rate"
+  description  = "AWS/Lambda function error rate is greater than 10 for the last 5m"
+  program_text = <<-EOF
 errors = data('Errors', filter=(filter('namespace', 'AWS/Lambda') and filter('FunctionName', '*') and filter('Resource', '*') and filter('stat', 'sum'))).publish(label='errors', enable=False)
 detect((when(errors > 10, lasting='5m'))).publish('AWS/Lambda function error rate is greater than 10 for the last 5m')
     EOF
   rule {
-        detect_label = "AWS/Lambda function error rate is greater than 10 for the last 5m"
-        severity = "Major"
+    detect_label = "AWS/Lambda function error rate is greater than 10 for the last 5m"
+    severity     = "Major"
   }
 }
 resource "signalfx_detector" "lambda_historical_duration_error" {
@@ -21,7 +21,7 @@ against_periods.detector_mean_std(stream=A, window_to_compare='15m', space_betwe
   rule {
         detect_label = "AWS/Lambda Lambda duration has been greater then historical norm during the past 10 minutes"
         severity = "Minor"
-  }
+    }
 }
 resource "signalfx_detector" "lambda_historical_coldstart_count_error" {
     name = "[SFx] AWS/Lambda Historical coldstart count error"
