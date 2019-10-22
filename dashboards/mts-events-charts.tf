@@ -21,12 +21,12 @@ resource "signalfx_single_value_chart" "mtscreationrate0" {
   program_text = <<-EOF
         data('sf.org.numMetricTimeSeriesCreated').sum().mean(over='1m').scale(60).publish(label='A')
         EOF
-
   viz_options {
     label        = "A"
     color        = "blue"
     value_suffix = " MTS/min"
   }
+  max_precision = 3
 }
 
 resource "signalfx_time_chart" "mtstrend0" {
@@ -37,11 +37,8 @@ resource "signalfx_time_chart" "mtstrend0" {
         B = (A).timeshift('1w').publish(label='B', enable=False)
         C = ((A-B)/B).scale(100).publish(label='C')
         EOF
-
-  time_range = 604800
-
-  plot_type = "LineChart"
-
+  time_range   = 604800
+  plot_type    = "LineChart"
   axis_left {
     label = "MTS"
   }
@@ -75,12 +72,12 @@ resource "signalfx_single_value_chart" "epm0" {
   program_text = <<-EOF
         data('sf.org.numEventsIngested').sum().mean(over='1m').scale(60).publish(label='A')
         EOF
-
   viz_options {
     label        = "A"
     color        = "blue"
     value_suffix = " EPM"
   }
+  max_precision = 3
 }
 
 resource "signalfx_time_chart" "epmtrend0" {
@@ -91,11 +88,8 @@ resource "signalfx_time_chart" "epmtrend0" {
         B = (A).timeshift('1w').publish(label='B', enable=False)
         C = ((A-B)/B).scale(100).publish(label='C')
         EOF
-
-  time_range = 604800
-
-  plot_type = "LineChart"
-
+  time_range   = 604800
+  plot_type    = "LineChart"
   axis_left {
     label = "EPM"
   }
@@ -129,12 +123,12 @@ resource "signalfx_single_value_chart" "etscreationrate0" {
   program_text = <<-EOF
         data('sf.org.numEventTimeSeriesCreated').sum().mean(over='1m').scale(60).publish(label='A')
         EOF
-
   viz_options {
     label        = "A"
     color        = "blue"
     value_suffix = " ETS/min"
   }
+  max_precision = 3
 }
 
 resource "signalfx_time_chart" "etstrend0" {
@@ -145,11 +139,8 @@ resource "signalfx_time_chart" "etstrend0" {
         B = (A).timeshift('1w').publish(label='B', enable=False)
         C = ((A-B)/B).scale(100).publish(label='C')
         EOF
-
-  time_range = 604800
-
-  plot_type = "LineChart"
-
+  time_range   = 604800
+  plot_type    = "LineChart"
   axis_left {
     label = "ETS"
   }

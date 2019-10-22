@@ -21,27 +21,24 @@ resource "signalfx_single_value_chart" "hostcount0" {
   program_text = <<-EOF
         data('sf.org.numResourcesMonitored', filter=filter('resourceType', 'host')).publish(label='A')
         EOF
-
   viz_options {
     label        = "A"
     color        = "blue"
     value_suffix = " Hosts"
   }
+  max_precision = 3
 }
 
 resource "signalfx_time_chart" "hosttrend0" {
-  name         = "Host Count"
+  name         = "Hosts Count - Trend"
   description  = "Host count (blue), % week-on-week growth (brown)"
   program_text = <<-EOF
         A = data('sf.org.numResourcesMonitored', filter=filter('resourceType', 'host')).publish(label='A')
         B = (A).timeshift('1w').publish(label='B', enable=False)
         C = ((A-B)/B).scale(100).publish(label='C')
         EOF
-
-  time_range = 604800
-
-  plot_type = "LineChart"
-
+  time_range   = 604800
+  plot_type    = "LineChart"
   axis_left {
     label = "Hosts"
   }
@@ -80,29 +77,26 @@ resource "signalfx_single_value_chart" "containercount0" {
   program_text = <<-EOF
         data('sf.org.numResourcesMonitored', filter=filter('resourceType', 'container')).publish(label='A')
         EOF
-
   viz_options {
     label        = "A"
     color        = "blue"
     value_suffix = " Containers"
   }
+  max_precision = 3
 }
 
 resource "signalfx_time_chart" "containertrend0" {
-  name         = "Host Count"
-  description  = "Host count (blue), % week-on-week growth (brown)"
+  name         = "Containers Count - Trend"
+  description  = "Container count (blue), % week-on-week growth (brown)"
   program_text = <<-EOF
         A = data('sf.org.numResourcesMonitored', filter=filter('resourceType', 'container')).mean(over='10m').publish(label='A')
         B = (A).timeshift('1w').publish(label='B', enable=False)
         C = ((A-B)/B).scale(100).publish(label='C')
         EOF
-
-  time_range = 604800
-
-  plot_type = "LineChart"
-
+  time_range   = 604800
+  plot_type    = "LineChart"
   axis_left {
-    label = "Hosts"
+    label = "Containers"
   }
   axis_right {
     label = "WoW Growth (%)"
@@ -110,7 +104,7 @@ resource "signalfx_time_chart" "containertrend0" {
   viz_options {
     label        = "A"
     color        = "blue"
-    value_suffix = " Hosts"
+    value_suffix = " Containers"
   }
   viz_options {
     label = "C"
@@ -136,29 +130,26 @@ resource "signalfx_single_value_chart" "custommetrics0" {
   program_text = <<-EOF
         data('sf.org.numCustomMetrics').publish(label='A')
         EOF
-
   viz_options {
     label        = "A"
     color        = "blue"
     value_suffix = " Custom Metrics"
   }
+  max_precision = 3
 }
 
 resource "signalfx_time_chart" "custommetrictrend0" {
-  name         = "Host Count"
-  description  = "Host count (blue), % week-on-week growth (brown)"
+  name         = "Custom Metrics - Trend"
+  description  = "Custom Metrics (blue), % week-on-week growth (brown)"
   program_text = <<-EOF
         A = data('sf.org.numCustomMetrics').mean(over='10m').publish(label='A')
         B = (A).timeshift('1w').publish(label='B', enable=False)
         C = ((A-B)/B).scale(100).publish(label='C')
         EOF
-
-  time_range = 604800
-
-  plot_type = "LineChart"
-
+  time_range   = 604800
+  plot_type    = "LineChart"
   axis_left {
-    label = "Hosts"
+    label = "Custom Metrics"
   }
   axis_right {
     label = "WoW Growth (%)"
@@ -166,7 +157,7 @@ resource "signalfx_time_chart" "custommetrictrend0" {
   viz_options {
     label        = "A"
     color        = "blue"
-    value_suffix = " Hosts"
+    value_suffix = " Custom Metrics"
   }
   viz_options {
     label = "C"
@@ -191,29 +182,26 @@ resource "signalfx_single_value_chart" "hiresmetrics0" {
   program_text = <<-EOF
         data('sf.org.numHighResolutionMetrics').publish(label='A')
         EOF
-
   viz_options {
     label        = "A"
     color        = "blue"
     value_suffix = " Hi-Res Metrics"
   }
+  max_precision = 3
 }
 
 resource "signalfx_time_chart" "hiresmetrictrend0" {
-  name         = "Host Count"
-  description  = "Host count (blue), % week-on-week growth (brown)"
+  name         = "Hi-Res Metrics - Trend"
+  description  = "Hi-Res Metrics (blue), % week-on-week growth (brown)"
   program_text = <<-EOF
         A = data('sf.org.numHighResolutionMetrics').mean(over='10m').publish(label='A')
         B = (A).timeshift('1w').publish(label='B', enable=False)
         C = ((A-B)/B).scale(100).publish(label='C')
         EOF
-
-  time_range = 604800
-
-  plot_type = "LineChart"
-
+  time_range   = 604800
+  plot_type    = "LineChart"
   axis_left {
-    label = "Hosts"
+    label = "Hi-Res Metrics"
   }
   axis_right {
     label = "WoW Growth (%)"
@@ -221,11 +209,11 @@ resource "signalfx_time_chart" "hiresmetrictrend0" {
   viz_options {
     label        = "A"
     color        = "blue"
-    value_suffix = " Hosts"
+    value_suffix = " Hi-Res Metrics"
   }
   viz_options {
     label = "C"
-    color = "magenta"
+    color = "brown"
     axis  = "right"
   }
 }
