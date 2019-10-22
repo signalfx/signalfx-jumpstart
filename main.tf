@@ -18,3 +18,7 @@ module "azure" {
 module "docker" {
   source = "./docker"
 }
+
+module "dashboards" {
+  source = "./dashboards"
+}
