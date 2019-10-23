@@ -10,11 +10,11 @@ detect(when(not (C > 80) and not (C < 70), lasting='10m')).publish('Container CP
     EOF
   rule {
     detect_label = "Container CPU utilization % is within 70 and 80 for 10m"
-    severity     = "Warning"
+    severity = "Warning"
 
   }
   rule {
     detect_label = "Container CPU utilization % is above 80 for 5m"
-    severity     = "Major"
+    severity = "Major"
   }
 }

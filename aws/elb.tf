@@ -8,6 +8,6 @@ detect(when(((error/total)*100) >= 10, lasting='5m')).publish('AWS/ELB 10% of re
     EOF
   rule {
     detect_label = "AWS/ELB 10% of requests were 5xx for last 5m"
-    severity     = "Critical"
+    severity = "Critical"
   }
 }
