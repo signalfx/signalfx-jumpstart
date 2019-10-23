@@ -1,4 +1,4 @@
-rresource "signalfx_detector" "azure_DB_cpu_historical_norm" {
+resource "signalfx_detector" "azure_DB_cpu_historical_norm" {
   name         = "[SFx] Azure SQL Database CPU % greater than historical norm"
   description  = "Alerts when CPU usage for SQL Database for the last 10 minutes was significantly higher than normal, as compared to the last 3 hours"
   program_text = <<-EOF
