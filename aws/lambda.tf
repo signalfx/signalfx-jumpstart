@@ -11,28 +11,28 @@ detect((when(errors > 10, lasting='5m'))).publish('AWS/Lambda function error rat
   }
 }
 resource "signalfx_detector" "lambda_historical_duration_error" {
-  name         = "[SFx] AWS/Lambda Historical duration error"
+  name         = "[SFx] AWS/Lambda Historical Duration Error"
   description  = "AWS/Lambda Lambda duration has been greater then historical norm during the past 10 minutes"
   program_text = <<-EOF
 from signalfx.detectors.against_periods import against_periods
 A = data('Duration', filter=filter('namespace', 'AWS/Lambda')).mean().publish(label='A', enable=False)
-against_periods.detector_mean_std(stream=A, window_to_compare='15m', space_between_windows='60m', num_windows=4, fire_num_stddev=3, clear_num_stddev=2, discard_historical_outliers=True, orientation='above').publish('AWS/Lambda Lambda duration has been greater then historical norm during the past 10 minutes')
+against_periods.detector_mean_std(stream=A, window_to_compare='15m', space_between_windows='60m', num_windows=4, fire_num_stddev=3, clear_num_stddev=2, discard_historical_outliers=True, orientation='above').publish('AWS/Lambda Lambda duration has been greater then historical norm during the past 15 minutes')
     EOF
   rule {
-    detect_label = "AWS/Lambda Lambda duration has been greater then historical norm during the past 10 minutes"
+    detect_label = "AWS/Lambda Lambda duration has been greater then historical norm during the past 15 minutes"
     severity     = "Minor"
   }
 }
 resource "signalfx_detector" "lambda_historical_coldstart_count_error" {
-  name         = "[SFx] AWS/Lambda Historical coldstart count error"
-  description  = "AWS/Lambda coldstart count has been greater then historical norm during the past 10 minutes"
+  name         = "[SFx] AWS/Lambda Wrapper Historical Coldstart Count Error"
+  description  = "AWS/Lambda Wrapper coldstart count has been greater then historical norm during the past 10 minutes"
   program_text = <<-EOF
 from signalfx.detectors.against_periods import against_periods
 A = data('function.cold_starts',filter=filter('namespace', 'AWS/Lambda')).publish(label='A', enable=False)
-against_periods.detector_mean_std(stream=A, window_to_compare='10m', space_between_windows='24h', num_windows=4, fire_num_stddev=3, clear_num_stddev=2.5, discard_historical_outliers=True, orientation='above').publish('AWS/Lambda coldstart count has been greater then historical norm during the past 30 minutes')
+against_periods.detector_mean_std(stream=A, window_to_compare='10m', space_between_windows='24h', num_windows=4, fire_num_stddev=3, clear_num_stddev=2.5, discard_historical_outliers=True, orientation='above').publish('AWS/Lambda Wrapper coldstart count has been greater then historical norm during the past 10 minutes')
     EOF
   rule {
-    detect_label = "AWS/Lambda coldstart count has been greater then historical norm during the past 30 minutes"
+    detect_label = "AWS/Lambda Wrapper coldstart count has been greater then historical norm during the past 10 minutes"
     severity     = "Warning"
   }
 }
