@@ -28,7 +28,7 @@ resource "signalfx_detector" "lambda_historical_coldstart_count_error" {
   description  = "AWS/Lambda coldstart count has been greater then historical norm during the past 10 minutes"
   program_text = <<-EOF
 from signalfx.detectors.against_periods import against_periods
-A = data('function.cold_starts').publish(label='A', enable=False)
+A = data('function.cold_starts',filter=filter('namespace', 'AWS/Lambda')).publish(label='A', enable=False)
 against_periods.detector_mean_std(stream=A, window_to_compare='10m', space_between_windows='24h', num_windows=4, fire_num_stddev=3, clear_num_stddev=2.5, discard_historical_outliers=True, orientation='above').publish('AWS/Lambda coldstart count has been greater then historical norm during the past 30 minutes')
     EOF
   rule {
