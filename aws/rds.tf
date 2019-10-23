@@ -8,7 +8,7 @@ countdown.hours_left_stream_detector(stream=free, minimum_value=20, lower_thresh
     EOF
   rule {
     detect_label = "AWS/RDS free disk space is expected to be below 20% in 12 hours"
-    severity     = "Warning"
+    severity = "Warning"
   }
 }
 

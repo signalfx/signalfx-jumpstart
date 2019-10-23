@@ -8,7 +8,7 @@ against_recent.detector_mean_std(stream=A, current_window='10m', historical_wind
     EOF
   rule {
     detect_label = "CPU % is significantly greater than normal, and increasing"
-    severity     = "Warning"
+    severity = "Warning"
   }
 }
 
