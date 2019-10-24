@@ -56,11 +56,11 @@ resource "signalfx_detector" "rds_deadlocks" {
   name         = "[SFx] AWS/RDS deadlocks exceeding 0.02 per second"
   description  = "Alerts when the average number of deadlocks in the RDS database exceeds 0.02 deadlocks/s for 5 minutes"
   program_text = <<-EOF
-    A = data('Deadlocks', filter=filter('namespace', 'AWS/RDS').publish(label='A', enable=False)
-    detect(when(A > 0.02, lasting='5m')).publish('AWS/RDS there are more that 0.02 deadlocks/s for 5m')
+    A = data('Deadlocks', filter=filter('namespace', 'AWS/RDS')).publish(label='A', enable=False)
+    detect(when(A > 0.02, lasting='5m')).publish('AWS/RDS there are more that 0.02 deadlocks/s for 5 minutes')
   EOF
   rule {
-    detect_label = "AWS/RDS there are more that 0.02 deadlocks/s for 5m"
+    detect_label = "AWS/RDS there are more that 0.02 deadlocks/s for 5 minutes"
     severity     = "Warning"
   }
 }
