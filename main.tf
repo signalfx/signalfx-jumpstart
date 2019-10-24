@@ -22,3 +22,7 @@ module "docker" {
 module "dashboards" {
   source = "./dashboards"
 }
+
+module "gcp" {
+  source = "./gcp"
+}

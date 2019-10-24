@@ -39,7 +39,7 @@ resource "signalfx_detector" "rds_CPU_high_error" {
 }
 
 resource "signalfx_detector" "rds_cpu_historical_norm" {
-  name         = "[SFx] AWS RDS CPU % has been significantly higher for the past 10 minutes then the historical norm"
+  name         = "[SFx] AWS/RDS CPU % has been significantly higher for the past 10 minutes then the historical norm"
   description  = "Alerts when CPU usage for SQL Database for the last 10 minutes was significantly higher than normal, as compared to the last 3 hours"
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
@@ -48,6 +48,19 @@ resource "signalfx_detector" "rds_cpu_historical_norm" {
   EOF
   rule {
     detect_label = "AWS RDS CPU has been significantly higher for the past 10 minutes then the historical norm"
+    severity     = "Warning"
+  }
+}
+
+resource "signalfx_detector" "rds_deadlocks" {
+  name         = "[SFx] AWS/RDS deadlocks exceeding 0.02 per second"
+  description  = "Alerts when the average number of deadlocks in the RDS database exceeds 0.02 deadlocks/s for 5 minutes"
+  program_text = <<-EOF
+    A = data('Deadlocks', filter=filter('namespace', 'AWS/RDS')).publish(label='A', enable=False)
+    detect(when(A > 0.02, lasting='5m')).publish('AWS/RDS there are more that 0.02 deadlocks/s for 5 minutes')
+  EOF
+  rule {
+    detect_label = "AWS/RDS there are more that 0.02 deadlocks/s for 5 minutes"
     severity     = "Warning"
   }
 }

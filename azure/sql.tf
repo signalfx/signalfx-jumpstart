@@ -3,6 +3,7 @@ resource "signalfx_detector" "azure_SQL_Error" {
   description  = "Alerts when CPU usage for Azure SQL for the last 10 minutes was significantly higher than normal, as compared to the last 3 hours"
   program_text = <<-EOF
 
+
 from signalfx.detectors.against_periods import against_periods
 
 A = data('cpu_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/databases')).mean_plus_stddev(stddevs=1, over='10m').publish(label='A', enable=False)
@@ -21,12 +22,7 @@ detect((when(D > 99)) or (when(E > 99))).publish('Azure SQL CPU % has been at 10
 detect((when(F > 95)) or (when(G > 95))).publish('Azure SQL physical data read above 95%')
 
     EOF
-
-  rule {
-    detect_label = "Azure SQL database CPU % is significantly greater than the last 3 hours"
-    severity = "Warning"
-  }
-  rule {
+ rule {
     detect_label = "Azure SQL elasticpools CPU % is significantly greater than the last 3 hours"
     severity = "Warning"
   }
