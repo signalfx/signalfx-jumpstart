@@ -39,54 +39,30 @@ detect(when(A > 80)).publish('Azure SQL DTU Consumption % is greater than 80 ove
   }
 }
 
-resource "signalfx_detector" "azure_DB_SQL_cpu_historical_norm" {
-  name = "[SFx] Azure SQL Database CPU at 100%"
-  description = "Alerts when CPU usage for SQL Database for the last 10 minutes was significantly higher than normal, as compared to the last 3 hours"
+resource "signalfx_detector" "azure_SQL_cpu_percentage_at_100" {
+  name         = "[SFx] Azure SQL Database/elasticpools CPU at 100% "
+  description  = "Alerts when CPU usage for SQL Database or elasticpool for the last 5 minutes was significantly at 100%"
   program_text = <<-EOF
-A = data('cpu_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/databases'), rollup='average').mean(over='10m').publish(label='A', enable=False)
-detect(when(A > 99)).publish('Azure SQL Database CPU % has been at 100% for the past 10 minutes')
+A = data('cpu_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/databases')).stddev(over='5m').publish(label='A', enable=False)
+B = data('cpu_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/elasticpools')).stddev(over='5m').publish(label='B', enable=False)
+detect((when(A > 99)) or (when(B > 99))).publish('Azure SQL Database or elasticpool CPU % has been at 100% for the past 5 minutes')
     EOF
   rule {
-    detect_label = "Azure SQL Database CPU % has been at 100% for the past 10 minutes"
-    severity     = "Critical"
-  }
-}
-
-resource "signalfx_detector" "azure_EP_cpu_historical_norm" {
-  name         = "[SFx] Azure SQL elasticpools CPU at 100% "
-  description  = "Alerts when CPU usage for SQL Database for the last 10 minutes was significantly higher than normal, as compared to the last 3 hours"
-  program_text = <<-EOF
-A = data('cpu_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/elasticpools'), rollup='average').mean(over='10m').publish(label='A', enable=False)
-detect(when(A > 99)).publish('Azure elasticpools CPU % has been at 100% for the past 10 minutes')
-    EOF
-  rule {
-    detect_label = "Azure elasticpools CPU % has been at 100% for the past 10 minutes"
+    detect_label = "Azure SQL Database or elasticpool CPU % has been at 100% for the past 5 minutes"
     severity = "Critical"
   }
 }
 
-resource "signalfx_detector" "azure_EP_Physical_dataread_high_error" {
-  name = "[SFx] Azure SQL elasticpools data read above 94%"
-  description = "Alerts when data reads for SQL elasticpools have been above 94%"
+resource "signalfx_detector" "azure_SQL_Physical_dataread_high_error" {
+  name = "[SFx] Azure SQL Physical data read above 94%"
+  description = "Alerts when data reads for SQL have been above 94%"
   program_text = <<-EOF
-A = data('physical_data_read_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/elasticpools')).mean_plus_stddev(stddevs=1, over='5m').publish(label='A', enable=False)
-detect(when(A > 94)).publish('Azure SQL elasticpools data read above 95%')
+A = data('physical_data_read_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/databases')).stddev(over='5m').publish(label='A', enable=False)
+B = data('physical_data_read_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/elasticpools')).stddev(over='5m').publish(label='B', enable=False)
+detect((when(A > 95)) or (when(B > 95))).publish('Azure SQL physical data read above 95%')
     EOF
   rule {
-    detect_label = "Azure SQL elasticpools data read above 95%"
+    detect_label = "Azure SQL physical data read above 95%"
     severity     = "Warning"
-  }
-}
-
-resource "signalfx_detector" "azure_DB_SQL_Physical_dataread_high_error" {
-  name         = "[SFx] Azure SQL Database data read above 94%"
-  description  = "Alerts when data reads have been above 94%"
-  program_text = <<-EOF
-A = data('physical_data_read_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/databases')).mean_plus_stddev(stddevs=1, over='5m').publish(label='A', enable=False)
-detect(when(A > 94)).publish('Azure SQL database data read above 95%')
-    EOF
-  rule {
-    detect_label = "Azure SQL database data read above 95%"
-    severity = "Warning"
   }
 }
