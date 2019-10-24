@@ -16,8 +16,8 @@ resource "signalfx_text_chart" "title1" {
   EOF
 }
 resource "signalfx_single_value_chart" "mtscreationrate0" {
-  name         = "Real-Time MTS Creation Rate"
-  description  = "Number of metric time series created in last minute"
+  name = "Real-Time MTS Creation Rate"
+  description = "Number of metric time series created in last minute"
   program_text = <<-EOF
     data('sf.org.numMetricTimeSeriesCreated').sum().mean(over='1m').scale(60).publish(label='A')
   EOF
@@ -37,8 +37,8 @@ resource "signalfx_time_chart" "mtstrend0" {
     B = (A).timeshift('1w').publish(label='B', enable=False)
     C = ((A-B)/B).scale(100).publish(label='C')
   EOF
-  time_range   = 604800
-  plot_type    = "LineChart"
+  time_range = 604800
+  plot_type = "LineChart"
   axis_left {
     label = "MTS"
   }
@@ -46,19 +46,19 @@ resource "signalfx_time_chart" "mtstrend0" {
     label = "WoW Growth (%)"
   }
   viz_options {
-    label        = "A"
-    color        = "blue"
+    label = "A"
+    color = "blue"
     value_suffix = " MTS"
   }
   viz_options {
     label = "C"
     color = "brown"
-    axis  = "right"
+    axis = "right"
   }
 }
 
 resource "signalfx_text_chart" "mtsinfo0" {
-  name     = "MTS Creation Rate - Info"
+  name = "MTS Creation Rate - Info"
   markdown = <<-EOF
     Metric(s):
     <code>sf.org.numMetricTimeSeriesCreated</code>
@@ -73,23 +73,23 @@ resource "signalfx_single_value_chart" "epm0" {
     data('sf.org.numEventsIngested').sum().mean(over='1m').scale(60).publish(label='A')
   EOF
   viz_options {
-    label        = "A"
-    color        = "blue"
+    label = "A"
+    color = "blue"
     value_suffix = " EPM"
   }
   max_precision = 3
 }
 
 resource "signalfx_time_chart" "epmtrend0" {
-  name         = "EPM - Trend"
-  description  = "EPM received (blue), % week-on-week growth (brown)"
+  name = "EPM - Trend"
+  description = "EPM received (blue), % week-on-week growth (brown)"
   program_text = <<-EOF
     A = data('sf.org.numEventsIngested').mean(over='1m').scale(60).sum().publish(label='A')
     B = (A).timeshift('1w').publish(label='B', enable=False)
     C = ((A-B)/B).scale(100).publish(label='C')
   EOF
-  time_range   = 604800
-  plot_type    = "LineChart"
+  time_range = 604800
+  plot_type  = "LineChart"
   axis_left {
     label = "EPM"
   }
@@ -118,8 +118,8 @@ resource "signalfx_text_chart" "epminfo0" {
 }
 
 resource "signalfx_single_value_chart" "etscreationrate0" {
-  name         = "Real-Time ETS Creation Rate"
-  description  = "Number of event time series created in last minute"
+  name = "Real-Time ETS Creation Rate"
+  description = "Number of event time series created in last minute"
   program_text = <<-EOF
     data('sf.org.numEventTimeSeriesCreated').sum().mean(over='1m').scale(60).publish(label='A')
   EOF
@@ -139,8 +139,8 @@ resource "signalfx_time_chart" "etstrend0" {
     B = (A).timeshift('1w').publish(label='B', enable=False)
     C = ((A-B)/B).scale(100).publish(label='C')
   EOF
-  time_range   = 604800
-  plot_type    = "LineChart"
+  time_range = 604800
+  plot_type = "LineChart"
   axis_left {
     label = "ETS"
   }
@@ -148,18 +148,18 @@ resource "signalfx_time_chart" "etstrend0" {
     label = "WoW Growth (%)"
   }
   viz_options {
-    label        = "A"
-    color        = "blue"
+    label = "A"
+    color = "blue"
     value_suffix = " ETS"
   }
   viz_options {
     label = "C"
     color = "brown"
-    axis  = "right"
+    axis = "right"
   }
 }
 resource "signalfx_text_chart" "etsinfo0" {
-  name     = "ETS Creation Rate - Info"
+  name = "ETS Creation Rate - Info"
   markdown = <<-EOF
     Metric(s):
     <code>sf.org.numEventTimeSeriesCreated</code>

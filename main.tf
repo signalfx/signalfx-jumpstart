@@ -26,3 +26,7 @@ module "dashboards" {
 module "gcp" {
   source = "./gcp"
 }
+
+module "pivotal" {
+  source = "./pivotal"
+}

@@ -1,4 +1,4 @@
-resource "signalfx_detector" "azure_SQL_Error" {
+resource "signalfx_detector" "azure_SQL_errors" {
   name         = "[SFx] Various Azure SQL Errors"
   description  = "Alerts when for various scenarios for Azure SQL both Database or elasticpools"
   program_text = <<-EOF
@@ -22,11 +22,11 @@ detect((when(D > 99)) or (when(E > 99))).publish('Azure SQL CPU % has been at 10
 detect((when(F > 95)) or (when(G > 95))).publish('Azure SQL physical data read above 95%')
 
     EOF
- rule {
+  rule {
     detect_label = "Azure SQL elasticpools CPU % is significantly greater than the last 3 hours"
     severity = "Warning"
   }
- rule {
+  rule {
     detect_label = "Azure SQL DTU Consumption is greater than 80% over the past 10 minutes"
     severity = "Minor"
   }
@@ -34,8 +34,8 @@ detect((when(F > 95)) or (when(G > 95))).publish('Azure SQL physical data read a
     detect_label = "Azure SQL CPU % has been at 100% for the past 5 minutes"
     severity = "Critical"
   }
-rule {
+  rule {
     detect_label = "Azure SQL physical data read above 95%"
-    severity     = "Warning"
+    severity = "Warning"
   }
 }
