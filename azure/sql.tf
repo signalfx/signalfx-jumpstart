@@ -1,6 +1,6 @@
 resource "signalfx_detector" "azure_SQL_Error" {
-  name         = "[SFx] Azure SQL CPU % greater than historical norm"
-  description  = "Alerts when CPU usage for Azure SQL for the last 10 minutes was significantly higher than normal, as compared to the last 3 hours"
+  name         = "[SFx] Various Azure SQL Errors"
+  description  = "Alerts when for various scenarios for Azure SQL both Database or elasticpools"
   program_text = <<-EOF
 
 
