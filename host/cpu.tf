@@ -8,6 +8,6 @@ resource "signalfx_detector" "cpu_historical_norm" {
   EOF
   rule {
     detect_label = "CPU utilization is significantly greater than normal, and increasing"
-    severity     = "Warning"
+    severity = "Warning"
   }
 }

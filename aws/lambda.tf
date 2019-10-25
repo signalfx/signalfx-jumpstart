@@ -13,14 +13,14 @@ resource "signalfx_detector" "lambda_errors" {
   EOF
   rule {
     detect_label = "AWS/Lambda function error rate is greater than 10 for the last 5m"
-    severity     = "Major"
+    severity = "Major"
   }
   rule {
     detect_label = "AWS/Lambda Lambda duration has been greater then historical norm during the past 15 minutes"
-    severity     = "Minor"
+    severity = "Minor"
   }
   rule {
     detect_label = "AWS/Lambda Wrapper coldstart count has been greater then historical norm during the past 10 minutes"
-    severity     = "Warning"
+    severity = "Warning"
   }
 }

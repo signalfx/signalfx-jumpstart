@@ -11,10 +11,10 @@ resource "signalfx_detector" "gcp_cloud_storage_errors" {
   EOF
   rule {
     detect_label = "GCP Cloud Storage 10% of requests were 4xx for 5m"
-    severity     = "Major"
+    severity = "Major"
   }
   rule {
     detect_label = "GCP Cloud Storage 10% of requests were 5xx for 5m"
-    severity     = "Major"
+    severity = "Major"
   }
 }

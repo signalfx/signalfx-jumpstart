@@ -22,23 +22,23 @@ against_recent.detector_mean_std(stream=C, current_window='10m', historical_wind
     EOF
   rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity error."
-    severity     = "Minor"
+    severity = "Minor"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity debug."
-    severity     = "Warning"
+    severity = "Warning"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity debug2."
-    severity     = "Warning"
+    severity = "Warning"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity fatal."
-    severity     = "Critical"
+    severity = "Critical"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity info."
-    severity     = "Warning"
+    severity = "Warning"
   }
 
 }
