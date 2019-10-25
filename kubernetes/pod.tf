@@ -8,7 +8,7 @@ resource "signalfx_detector" "k8s_pod_status" {
   EOF
   rule {
     detect_label = "K8S Pods in waiting state higher than normal"
-    severity = "Critical"
+    severity     = "Critical"
   }
 }
 
@@ -22,7 +22,7 @@ resource "signalfx_detector" "k8s_pods_active" {
   EOF
   rule {
     detect_label = "K8S Pods active changed significantly"
-    severity = "Critical"
+    severity     = "Critical"
   }
 }
 
@@ -38,7 +38,7 @@ resource "signalfx_detector" "k8s_pods_failed_pending_ratio" {
   EOF
   rule {
     detect_label = "K8S Pods failed and pending ratio"
-    severity = "Critical"
+    severity     = "Critical"
   }
 }
 

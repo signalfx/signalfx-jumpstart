@@ -8,7 +8,7 @@ resource "signalfx_detector" "k8s_container_restarts" {
   EOF
   rule {
     detect_label = "K8S Container restarts higher than normal"
-    severity = "Warning"
+    severity     = "Warning"
   }
 }
 
@@ -22,8 +22,8 @@ resource "signalfx_detector" "k8s_container_cpu" {
   EOF
   rule {
     detect_label = "K8S Container CPU Usage higher than normal, and increasing"
-    severity = "Warning"
-    disabled = true
+    severity     = "Warning"
+    disabled     = true
   }
 }
 
@@ -37,7 +37,7 @@ resource "signalfx_detector" "k8s_container_memory" {
   EOF
   rule {
     detect_label = "K8S Container Memory Usage higher than normal, and increasing"
-    severity = "Warning"
+    severity     = "Warning"
   }
 }
 

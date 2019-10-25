@@ -10,8 +10,8 @@ resource "signalfx_detector" "k8s_" {
   EOF
   rule {
     detect_label = "K8S Cluster CPU usage is imbalanced"
-    severity = "Critical"
-    disabled = true
+    severity     = "Critical"
+    disabled     = true
   }
 }
 
