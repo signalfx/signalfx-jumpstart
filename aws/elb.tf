@@ -8,6 +8,6 @@ resource "signalfx_detector" "httpcode_elb_5xx" {
   EOF
   rule {
     detect_label = "AWS/ELB 10% of requests were 5xx for last 5m"
-    severity = "Critical"
+    severity     = "Critical"
   }
 }

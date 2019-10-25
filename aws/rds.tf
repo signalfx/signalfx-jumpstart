@@ -8,12 +8,12 @@ resource "signalfx_detector" "rds_free_space" {
   EOF
   rule {
     detect_label = "AWS/RDS free disk space is expected to be below 20% in 12 hours"
-    severity = "Warning"
+    severity     = "Warning"
   }
 }
 resource "signalfx_detector" "rds_DiskQueueDepth_historical_error" {
-  name = "[SFx] AWS/RDS rds_DiskQueueDepth for the last 10 minutes where significantly higher than normal, as compared to the last 12 hours"
-  description = "Alerts when the number of outstanding IOs (read/write requests) in AWS/RD was significantly higher than normal for 10 minutes, as compared to the last 12 hours"
+  name         = "[SFx] AWS/RDS rds_DiskQueueDepth for the last 10 minutes where significantly higher than normal, as compared to the last 12 hours"
+  description  = "Alerts when the number of outstanding IOs (read/write requests) in AWS/RD was significantly higher than normal for 10 minutes, as compared to the last 12 hours"
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
     A = data('DiskQueueDepth', filter=filter('namespace', 'AWS/RDS')).mean_plus_stddev(stddevs=1, over='10m').publish(label='A', enable=False)
@@ -34,13 +34,13 @@ resource "signalfx_detector" "rds_CPU_high_error" {
   EOF
   rule {
     detect_label = "AWS/RDS CPU usage has been over 95% for the past 10 minutes"
-    severity = "Critical"
+    severity     = "Critical"
   }
 }
 
 resource "signalfx_detector" "rds_cpu_historical_norm" {
-  name = "[SFx] AWS/RDS CPU % has been significantly higher for the past 10 minutes then the historical norm"
-  description = "Alerts when CPU usage for SQL Database for the last 10 minutes was significantly higher than normal, as compared to the last 3 hours"
+  name         = "[SFx] AWS/RDS CPU % has been significantly higher for the past 10 minutes then the historical norm"
+  description  = "Alerts when CPU usage for SQL Database for the last 10 minutes was significantly higher than normal, as compared to the last 3 hours"
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
     A = data('CPUUtilization', filter=filter('namespace', 'AWS/RDS')).mean().publish(label='A', enable=False)
@@ -61,6 +61,33 @@ resource "signalfx_detector" "rds_deadlocks" {
   EOF
   rule {
     detect_label = "AWS/RDS there are more that 0.02 deadlocks/s for 5 minutes"
-    severity = "Warning"
+    severity     = "Warning"
+  }
+}
+
+resource "signalfx_detector" "rds_read_latency" {
+  name         = "[SFx] AWS/RDS Latency "
+  description  = "Alerts when AWS/RDS read latency is above 100ms for at least 5 seconds"
+  program_text = <<-EOF
+  A = data('ReadLatency', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*')).mean(by=['aws_account_id', 'aws_region', 'DBInstanceIdentifier']).scale(1000).max().publish(label='A', enable=False)
+  detect(when(A > 100, lasting='5s')).publish('AWS/RDS read latency has been above 100ms for at least 5 seconds')
+  EOF
+  rule {
+    detect_label = "AWS/RDS read latency has been above 100ms for at least 5 seconds"
+    severity     = "Major"
+  }
+}
+
+resource "signalfx_detector" "rds_free_memory" {
+  name         = "[SFx] AWS/RDS Latency "
+  description  = "Alerts when the amount of available memory, in bytes < 200MB for 1h and the amount of swap space used on the RDS DB instance in bytes  > 50MB for 1 h"
+  program_text = <<-EOF
+    A = data('FreeableMemory', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'lower')).publish(label='A', enable=False)
+    B = data('SwapUsage', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'upper')).publish(label='B', enable=False)
+    detect((when(A < 209715200, lasting='1h') and when(B > 52428800, lasting='1h'))).publish('AWS/RDS free memory is below 200MB and swap space above 50MB for 1h')
+  EOF
+  rule {
+    detect_label = "AWS/RDS free memory is below 200MB and swap space above 50MB for 1h"
+    severity     = "Major"
   }
 }
