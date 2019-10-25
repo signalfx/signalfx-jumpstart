@@ -24,30 +24,30 @@ detect(when(E >= 1 )).publish('Pivotal Cloudfoundry - TaskAuctionsFailed - Criti
     EOF
   rule {
     detect_label = "Pivotal Cloudfoundry - AuctionsFailed - Minor."
-    severity = "Minor"
+    severity     = "Minor"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - AuctionsFailed - Critical."
-    severity = "Critical"
+    severity     = "Critical"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - FetchStatesDuration > 2 sec."
-    severity = "Minor"
+    severity     = "Minor"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - FetchStatesDuration > 5 sec."
-    severity = "Critical"
+    severity     = "Critical"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - LRPAuctionsStarted Historical norm deviation."
-    severity = "Warning"
+    severity     = "Warning"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - TaskAuctionsFailed - Minor."
-    severity = "Minor"
+    severity     = "Minor"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - TaskAuctionsFailed - Critical."
-    severity = "Critical"
+    severity     = "Critical"
   }
 }

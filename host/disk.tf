@@ -11,15 +11,15 @@ resource "signalfx_detector" "disk_space_low" {
   EOF
   rule {
     detect_label = "Disk space has filled upto 80%"
-    severity = "Major"
+    severity     = "Major"
   }
   rule {
     detect_label = "Disk space has filled upto 90%"
-    severity = "Critical"
+    severity     = "Critical"
   }
   rule {
     detect_label = "Disk space utilization is projected to reach 100% within 24 hours"
-    severity = "Critical"
+    severity     = "Critical"
   }
 
 }

@@ -27,13 +27,13 @@ resource "signalfx_detector" "k8s_cluster_memory_overcommitted" {
   EOF
   rule {
     detect_label = "K8S Cluster Memory Overcommitted"
-    severity = "Warning"
+    severity     = "Warning"
   }
 }
 
 resource "signalfx_detector" "k8s_daemonset_ready_vs_scheduled" {
-  name = "[SFx] K8S Cluster DaemonSet ready vs scheduled"
-  description = "Alerts when number of ready and scheduled DaemonSets have diverged"
+  name         = "[SFx] K8S Cluster DaemonSet ready vs scheduled"
+  description  = "Alerts when number of ready and scheduled DaemonSets have diverged"
   program_text = <<-EOF
     A = data('kube_daemonset_status_number_ready', filter=filter('kubernetes_cluster', '*') and filter('daemonset', '*')).sum(by=['kubernetes_cluster', 'daemonset']).publish(label='A', enable=False)
     B = data('kube_daemonset_status_desired_number_scheduled', filter=filter('kubernetes_cluster', '*') and filter('daemonset', '*')).sum(by=['kubernetes_cluster', 'daemonset']).publish(label='B', enable=False)

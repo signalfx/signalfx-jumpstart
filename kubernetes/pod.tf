@@ -8,13 +8,13 @@ resource "signalfx_detector" "k8s_pod_status" {
   EOF
   rule {
     detect_label = "K8S Pods in waiting state higher than normal"
-    severity = "Critical"
+    severity     = "Critical"
   }
 }
 
 resource "signalfx_detector" "k8s_pods_active" {
-  name = "[SFx] K8S Pods active"
-  description = "Alerts when number of actrive pods changed significantly"
+  name         = "[SFx] K8S Pods active"
+  description  = "Alerts when number of actrive pods changed significantly"
   program_text = <<-EOF
     from signalfx.detectors.against_recent import against_recent
     A = data('container_cpu_utilization', filter=filter('kubernetes_cluster', '*') and filter('kubernetes_namespace', '*') and filter('deployment', '*', match_missing=True) and filter('sf_tags', '*', match_missing=True)).sum(by=['kubernetes_cluster', 'kubernetes_namespace', 'kubernetes_pod_uid']).count().publish(label='A', enable=False)
@@ -38,7 +38,7 @@ resource "signalfx_detector" "k8s_pods_failed_pending_ratio" {
   EOF
   rule {
     detect_label = "K8S Pods failed and pending ratio"
-    severity = "Critical"
+    severity     = "Critical"
   }
 }
 

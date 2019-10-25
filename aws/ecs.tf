@@ -14,6 +14,6 @@ resource "signalfx_detector" "aws_ecs_smartagent_cpu" {
   EOF
   rule {
     detect_label = "AWS/ECS Cluster High CPU 5m"
-    severity = "Major"
+    severity     = "Major"
   }
 }

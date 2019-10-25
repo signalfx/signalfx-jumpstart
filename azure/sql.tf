@@ -24,18 +24,18 @@ detect((when(F > 95)) or (when(G > 95))).publish('Azure SQL physical data read a
     EOF
   rule {
     detect_label = "Azure SQL elasticpools CPU % is significantly greater than the last 3 hours"
-    severity = "Warning"
+    severity     = "Warning"
   }
   rule {
     detect_label = "Azure SQL DTU Consumption is greater than 80% over the past 10 minutes"
-    severity = "Minor"
+    severity     = "Minor"
   }
   rule {
     detect_label = "Azure SQL CPU % has been at 100% for the past 5 minutes"
-    severity = "Critical"
+    severity     = "Critical"
   }
   rule {
     detect_label = "Azure SQL physical data read above 95%"
-    severity = "Warning"
+    severity     = "Warning"
   }
 }

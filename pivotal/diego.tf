@@ -17,12 +17,12 @@ detect(when(A >= 20 )).publish('Pivotal Cloudfoundry - ConvergenceLRPDuration - 
     EOF
   rule {
     detect_label = "Pivotal Cloudfoundry - ConvergenceLRPDuration - Minor."
-    severity = "Minor"
+    severity     = "Minor"
   }
 
   rule {
     detect_label = "Pivotal Cloudfoundry - ConvergenceLRPDuration - Critical."
-    severity = "Critical"
+    severity     = "Critical"
   }
   /*
   rule {

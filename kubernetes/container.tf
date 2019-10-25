@@ -8,13 +8,13 @@ resource "signalfx_detector" "k8s_container_restarts" {
   EOF
   rule {
     detect_label = "K8S Container restart count is higher than normal"
-    severity = "Warning"
+    severity     = "Warning"
   }
 }
 
 resource "signalfx_detector" "k8s_container_cpu" {
-  name = "[SFx] K8S Container CPU utilization is higher than normal, and increasing"
-  description = "Alerts when container CPU utilization (%) in the last 5m is more than 2.5 standard deviations above the mean of its preceding 30m"
+  name         = "[SFx] K8S Container CPU utilization is higher than normal, and increasing"
+  description  = "Alerts when container CPU utilization (%) in the last 5m is more than 2.5 standard deviations above the mean of its preceding 30m"
   program_text = <<-EOF
     from signalfx.detectors.against_recent import against_recent
     A = data('container_cpu_percent', filter=filter('kubernetes_cluster', '*') and filter('kubernetes_namespace', '*') and filter('sf_tags', '*', match_missing=True) and filter('deployment', '*', match_missing=True), rollup='rate').publish(label='A', enable=False)
@@ -38,7 +38,7 @@ population.detector(population_stream=A, group_by_property=None, fire_num_dev=3.
   EOF
   rule {
     detect_label = "K8S Container Memory Usage higher than normal, and increasing"
-    severity = "Warning"
+    severity     = "Warning"
   }
 }
 
