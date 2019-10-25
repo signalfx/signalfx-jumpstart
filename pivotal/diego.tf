@@ -9,6 +9,7 @@ from signalfx.detectors.against_recent import against_recent
 
 A = data('bbs.ConvergenceLRPDuration', filter=filter('metric_source', 'cloudfoundry'), rollup='max').max(over='15m').publish(label='A')
 B = (A/1000000000).publish(label='B')
+C = data('bbs.Domain.cf-apps', filter=filter('metric_source', 'cloudfoundry')).publish(label='C')
 
 detect((when((A >= 10) and (A < 20)))).publish('Pivotal Cloudfoundry - ConvergenceLRPDuration - Minor.')
 detect(when(A >= 20 )).publish('Pivotal Cloudfoundry - ConvergenceLRPDuration - Critical.')
