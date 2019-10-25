@@ -27,6 +27,10 @@ module "gcp" {
   source = "./gcp"
 }
 
+module "kubernetes" {
+  source = "./kubernetes"
+}
+
 module "pivotal" {
   source = "./pivotal"
 }
