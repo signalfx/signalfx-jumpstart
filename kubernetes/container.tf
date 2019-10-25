@@ -28,12 +28,13 @@ resource "signalfx_detector" "k8s_container_cpu" {
 }
 
 resource "signalfx_detector" "k8s_container_memory" {
-  name         = "[SFx] Container memory utilization is higher than normal, and increasing"
-  description  = "Alerts when container memory utilization in the last 5m is more than 2.5 standard deviations above the mean of its preceding 30m"
+  name         = "[SFx] K8S Container top 5 memory utilization is higher than normal, and increasing"
+  description  = "Alerts when container memory utilization of top 5 in the last 15m is more than 3.5 standard deviations above the median of similar signals for 100% of 15m"
   program_text = <<-EOF
-    from signalfx.detectors.population_comparison import population
-    A = data('container_memory_usage_bytes', filter=filter('kubernetes_cluster', '*') and filter('kubernetes_namespace', '*') and filter('sf_tags', '*', match_missing=True) and filter('deployment', '*')).publish(label='A', enable=False)
-    population.detector(population_stream=A, group_by_property=None, fire_num_dev=2.5, fire_lasting=lasting('5m', 0.8), clear_num_dev=2, clear_lasting=lasting('5m', 0.8), strategy='median_MAD', orientation='above').publish('K8S Container Memory Usage Detector')
+from signalfx.detectors.population_comparison import population
+A = data('container_memory_usage_bytes', filter=filter('kubernetes_cluster', '*') and filter('kubernetes_namespace', '*') and filter('deployment', '*') and filter('sf_tags', '*')).sum(by=['container_name']).top(by=['kubernetes_cluster'], count=5).publish(label='A', enable=False)
+D = (A).mean(over='5m').publish(label='D', enable=False)
+population.detector(population_stream=A, group_by_property=None, fire_num_dev=3.5, fire_lasting=lasting('15m', 1), clear_num_dev=3, clear_lasting=lasting('15m', 1), strategy='median_MAD', orientation='above').publish('K8S Container Memory Usage higher than normal, and increasing')
   EOF
   rule {
     detect_label = "K8S Container Memory Usage higher than normal, and increasing"
