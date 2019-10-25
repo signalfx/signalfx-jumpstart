@@ -79,7 +79,7 @@ resource "signalfx_detector" "rds_read_latency" {
 }
 
 resource "signalfx_detector" "rds_free_memory" {
-  name         = "[SFx] AWS/RDS Latency "
+  name         = "[SFx] AWS/RDS Free Memory Running Out"
   description  = "Alerts when the amount of available memory, in bytes < 200MB for 1h and the amount of swap space used on the RDS DB instance in bytes  > 50MB for 1 h"
   program_text = <<-EOF
     A = data('FreeableMemory', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'lower')).publish(label='A', enable=False)
