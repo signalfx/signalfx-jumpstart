@@ -64,3 +64,16 @@ resource "signalfx_detector" "rds_deadlocks" {
     severity     = "Warning"
   }
 }
+
+resource "signalfx_detector" "rds_read_latency" {
+  name         = "[SFx] AWS/RDS Latency "
+  description  = "Alerts when AWS/RDS read latency is above 100ms for at least 5 seconds"
+  program_text = <<-EOF
+  A = data('ReadLatency', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*')).mean(by=['aws_account_id', 'aws_region', 'DBInstanceIdentifier']).scale(1000).max().publish(label='A', enable=False)
+  detect(when(A > 100, lasting='5s')).publish('AWS/RDS read latency has been above 100ms for at least 5 seconds')
+  EOF
+  rule {
+    detect_label = "AWS/RDS read latency has been above 100ms for at least 5 seconds"
+    severity     = "Major"
+  }
+}
