@@ -22,31 +22,31 @@ against_recent.detector_mean_std(stream=C, current_window='10m', historical_wind
     EOF
   rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity error."
-    severity = "Minor"
+    severity     = "Minor"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity debug."
-    severity = "Warning"
+    severity     = "Warning"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity debug2."
-    severity = "Warning"
+    severity     = "Warning"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity fatal."
-    severity = "Critical"
+    severity     = "Critical"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity info."
-    severity = "Warning"
+    severity     = "Warning"
   }
 
 }
 
 
 resource "signalfx_detector" "pivotal_cloudfoundry_auctioneer_errors" {
-  name = "[SFx] Pivotal cloudFoundry Auctioneer errors"
-  description = "Alerts for various Pivotal CloudFoundry Auctioneer related error scenarios"
+  name         = "[SFx] Pivotal cloudFoundry Auctioneer errors"
+  description  = "Alerts for various Pivotal CloudFoundry Auctioneer related error scenarios"
   program_text = <<-EOF
 
 
@@ -67,11 +67,11 @@ detect(when(C >= 5)).publish('Pivotal Cloudfoundry - FetchStatesDuration > 5 sec
 against_periods.detector_mean_std(stream=D, window_to_compare='10m', space_between_windows='1d', num_windows=4, fire_num_stddev=5, clear_num_stddev=3, discard_historical_outliers=True, orientation='above').publish('Pivotal Cloudfoundry - AuctioneerLRPAuctionsStarted Historical norm deviation.')
 
     EOF
- rule {
+  rule {
     detect_label = "Pivotal Cloudfoundry - AuctionsFailed - Minor."
     severity     = "Minor"
   }
- rule {
+  rule {
     detect_label = "Pivotal Cloudfoundry - AuctionsFailed - Critical."
     severity     = "Critical"
   }
