@@ -26,4 +26,17 @@ resource "signalfx_detector" "k8s_container_cpu" {
   }
 }
 
+resource "signalfx_detector" "k8s_container_memory" {
+  name         = "[SFx] Container memory utilization is higher than normal, and increasing"
+  description  = "Alerts when container memory utilization in the last 5m is more than 2.5 standard deviations above the mean of its preceding 30m"
+  program_text = <<-EOF
+    from signalfx.detectors.population_comparison import population
+    A = data('container_memory_usage_bytes', filter=filter('kubernetes_cluster', '*') and filter('kubernetes_namespace', '*') and filter('sf_tags', '*', match_missing=True) and filter('deployment', '*')).publish(label='A', enable=False)
+    population.detector(population_stream=A, group_by_property=None, fire_num_dev=2.5, fire_lasting=lasting('5m', 0.8), clear_num_dev=2, clear_lasting=lasting('5m', 0.8), strategy='median_MAD', orientation='above').publish('K8S Container Memory Usage Detector')
+  EOF
+  rule {
+    detect_label = "K8S Container Memory Usage higher than normal, and increasing"
+    severity = "Warning"
+  }
+}
 
