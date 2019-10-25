@@ -77,3 +77,17 @@ resource "signalfx_detector" "rds_read_latency" {
     severity     = "Major"
   }
 }
+
+resource "signalfx_detector" "rds_free_memory" {
+  name         = "[SFx] AWS/RDS Latency "
+  description  = "Alerts when the amount of available memory, in bytes < 200MB for 1h and the amount of swap space used on the RDS DB instance in bytes  > 50MB for 1 h"
+  program_text = <<-EOF
+    A = data('FreeableMemory', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'lower')).publish(label='A', enable=False)
+    B = data('SwapUsage', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'upper')).publish(label='B', enable=False)
+    detect((when(A < 209715200, lasting='1h') and when(B > 52428800, lasting='1h'))).publish('AWS/RDS free memory is below 200MB and swap space above 50MB for 1h')
+  EOF
+  rule {
+    detect_label = "AWS/RDS free memory is below 200MB and swap space above 50MB for 1h"
+    severity     = "Major"
+  }
+}
