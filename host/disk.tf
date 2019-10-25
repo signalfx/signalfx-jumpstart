@@ -2,7 +2,7 @@ resource "signalfx_detector" "disk_space_low" {
   name         = "[SFx] Low Disk Space"
   description  = "Alerts when a partition is filling up or total disk space will fill up within 24hrs"
   program_text = <<-EOF
-    A = data('disk.utilization', filter=(not filter('plugin_instance', 'root'))).publish(label='disk_usage', enable=False)
+    A = data('disk.utilization', filter=(not filter('plugin_instance', 'snap*'))).publish(label='A')
     detect(when(A >= 90)).publish('Disk space has filled upto 90%')
     detect(when(A >= 80 and A < 90)).publish('Disk space has filled upto 80%')
     from signalfx.detectors.countdown import countdown
