@@ -1,6 +1,6 @@
 resource "signalfx_detector" "pivotal_cloudfoundry_diego_errors" {
-  name = "[SFx] Pivotal cloudFoundry diego errors"
-  description = "Alerts for various Pivotal CloudFoundry Diego related error scenarios"
+  name         = "[SFx] Pivotal cloudFoundry diego errors"
+  description  = "Alerts for various Pivotal CloudFoundry Diego related error scenarios"
   program_text = <<-EOF
 
 
@@ -14,16 +14,16 @@ detect((when((A >= 10) and (A < 20)))).publish('Pivotal Cloudfoundry - Convergen
 detect(when(A >= 20 )).publish('Pivotal Cloudfoundry - ConvergenceLRPDuration - Critical.')
 
     EOF
- rule {
-   detect_label = "Pivotal Cloudfoundry - ConvergenceLRPDuration - Minor."
-   severity     = "Minor"
+  rule {
+    detect_label = "Pivotal Cloudfoundry - ConvergenceLRPDuration - Minor."
+    severity = "Minor"
   }
- 
- rule {
+
+  rule {
     detect_label = "Pivotal Cloudfoundry - ConvergenceLRPDuration - Critical."
-    severity     = "Critical"
+    severity = "Critical"
   }
- /*
+  /*
   rule {
     detect_label = "Pivotal Cloudfoundry - FetchStatesDuration > 2 sec."
     severity     = "Minor"
@@ -44,5 +44,5 @@ detect(when(A >= 20 )).publish('Pivotal Cloudfoundry - ConvergenceLRPDuration - 
     detect_label = "Pivotal Cloudfoundry - TaskAuctionsFailed - Critical."
     severity     = "Critical"
   }
- */ 
+ */
 }

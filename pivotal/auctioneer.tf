@@ -1,6 +1,6 @@
 resource "signalfx_detector" "pivotal_cloudfoundry_auctioneer_errors" {
-  name = "[SFx] Pivotal cloudFoundry Auctioneer errors"
-  description = "Alerts for various Pivotal CloudFoundry Auctioneer related error scenarios"
+  name         = "[SFx] Pivotal cloudFoundry Auctioneer errors"
+  description  = "Alerts for various Pivotal CloudFoundry Auctioneer related error scenarios"
   program_text = <<-EOF
 
 
@@ -22,32 +22,32 @@ detect((when((E >= 0.5) and (E <= 1)))).publish('Pivotal Cloudfoundry - TaskAuct
 detect(when(E >= 1 )).publish('Pivotal Cloudfoundry - TaskAuctionsFailed - Critical.')
 
     EOF
- rule {
+  rule {
     detect_label = "Pivotal Cloudfoundry - AuctionsFailed - Minor."
-    severity     = "Minor"
+    severity = "Minor"
   }
- rule {
+  rule {
     detect_label = "Pivotal Cloudfoundry - AuctionsFailed - Critical."
-    severity     = "Critical"
+    severity = "Critical"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - FetchStatesDuration > 2 sec."
-    severity     = "Minor"
+    severity = "Minor"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - FetchStatesDuration > 5 sec."
-    severity     = "Critical"
+    severity = "Critical"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - LRPAuctionsStarted Historical norm deviation."
-    severity     = "Warning"
+    severity = "Warning"
   }
- rule {
+  rule {
     detect_label = "Pivotal Cloudfoundry - TaskAuctionsFailed - Minor."
-    severity     = "Minor"
+    severity = "Minor"
   }
- rule {
+  rule {
     detect_label = "Pivotal Cloudfoundry - TaskAuctionsFailed - Critical."
-    severity     = "Critical"
+    severity = "Critical"
   }
 }
