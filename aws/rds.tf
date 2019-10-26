@@ -56,8 +56,8 @@ resource "signalfx_detector" "rds_deadlocks" {
   name         = "[SFx] AWS/RDS deadlocks exceeding 0.02 per second"
   description  = "Alerts when the average number of deadlocks in the RDS database exceeds 0.02 deadlocks/s for 5 minutes"
   program_text = <<-EOF
-    A = data('Deadlocks', filter=filter('namespace', 'AWS/RDS')).publish(label='A', enable=False)
-    detect(when(A > 0.02, lasting='5m')).publish('AWS/RDS there are more that 0.02 deadlocks/s for 5 minutes')
+    Deadlocks = data('Deadlocks', filter=filter('namespace', 'AWS/RDS')).publish(label='Deadlocks', enable=False)
+    detect(when(Deadlocks > 0.02, lasting='5m')).publish('AWS/RDS there are more that 0.02 deadlocks/s for 5 minutes')
   EOF
   rule {
     detect_label = "AWS/RDS there are more that 0.02 deadlocks/s for 5 minutes"
@@ -69,8 +69,8 @@ resource "signalfx_detector" "rds_read_latency" {
   name         = "[SFx] AWS/RDS Latency "
   description  = "Alerts when AWS/RDS read latency is above 100ms for at least 5 seconds"
   program_text = <<-EOF
-  A = data('ReadLatency', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*')).mean(by=['aws_account_id', 'aws_region', 'DBInstanceIdentifier']).scale(1000).max().publish(label='A', enable=False)
-  detect(when(A > 100, lasting='5s')).publish('AWS/RDS read latency has been above 100ms for at least 5 seconds')
+  ReadLatency = data('ReadLatency', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*')).mean(by=['aws_account_id', 'aws_region', 'DBInstanceIdentifier']).scale(1000).max().publish(label='ReadLatency', enable=False)
+  detect(when(ReadLatency > 100, lasting='5s')).publish('AWS/RDS read latency has been above 100ms for at least 5 seconds')
   EOF
   rule {
     detect_label = "AWS/RDS read latency has been above 100ms for at least 5 seconds"
@@ -82,9 +82,9 @@ resource "signalfx_detector" "rds_free_memory" {
   name         = "[SFx] AWS/RDS Free Memory Running Out"
   description  = "Alerts when the amount of available memory, in bytes < 200MB for 1h and the amount of swap space used on the RDS DB instance in bytes  > 50MB for 1 h"
   program_text = <<-EOF
-    A = data('FreeableMemory', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'lower')).publish(label='A', enable=False)
-    B = data('SwapUsage', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'upper')).publish(label='B', enable=False)
-    detect((when(A < 209715200, lasting='1h') and when(B > 52428800, lasting='1h'))).publish('AWS/RDS free memory is below 200MB and swap space above 50MB for 1h')
+    FreeableMemory = data('FreeableMemory', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'lower')).publish(label='FreeableMemory', enable=False)
+    SwapUsage = data('SwapUsage', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'upper')).publish(label='SwapUsage', enable=False)
+    detect((when(FreeableMemory < 209715200, lasting='1h') and when(SwapUsage > 52428800, lasting='1h'))).publish('AWS/RDS free memory is below 200MB and swap space above 50MB for 1h')
   EOF
   rule {
     detect_label = "AWS/RDS free memory is below 200MB and swap space above 50MB for 1h"
