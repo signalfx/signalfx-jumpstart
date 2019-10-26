@@ -13,6 +13,8 @@ ConvergenceLRPDuration= (A/1000000000).publish(label='ConvergenceLRPDuration')
 cf_apps = data('bbs.Domain.cf-apps', filter=filter('metric_source', 'cloudfoundry')).publish(label='cf_apps')
 LRPsExtra = data('bbs.LRPsExtra', filter=filter('metric_source', 'cloudfoundry')).mean_plus_stddev(stddevs=1, over='5m').publish(label='LRPsExtra', enable=False)
 RequestLatency = data('bbs.RequestLatency', filter=filter('metric_source', 'cloudfoundry')).mean(over='15m').publish(label='RequestLatency', enable=False)
+LRPsMissing = data('bbs.LRPsMissing', filter=filter('metric_source', 'cloudfoundry')).mean(over='5m').publish(label='LRPsMissing', enable=False)
+CrashedActualLRPs = data('bbs.CrashedActualLRPs', filter=filter('metric_source', 'cloudfoundry')).mean(over='5m').publish(label='CrashedActualLRPs', enable=False)
 
 detect((when((ConvergenceLRPDuration >= 10) and (ConvergenceLRPDuration < 20)))).publish('Pivotal Cloudfoundry - ConvergenceLRPDuration - Minor.')
 detect(when(ConvergenceLRPDuration >= 20 )).publish('Pivotal Cloudfoundry - ConvergenceLRPDuration - Critical.')
@@ -21,6 +23,10 @@ detect(when(LRPsExtra >= 10)).publish('Pivotal Cloudfoundry - Diego has more LRP
 not_reporting.detector(stream=cf_apps, resource_identifier=None, duration='5m').publish('Pivotal Cloudfoundry - The signal bbs.Domain.cf-apps has not reported for 5m.')
 detect(when((RequestLatency >= 5) and (RequestLatency <= 10))).publish('Pivotal Cloudfoundry - The value of bbs.RequestLatency - Mean(15m) is within 5 and 10.')
 detect(when(RequestLatency >= 10)).publish('Pivotal Cloudfoundry - The value of bbs.RequestLatency - Mean(15m) is greater or equal to 10.')
+detect(when((LRPsMissing >= 5) and (LRPsMissing < 10))).publish('Pivotal Cloudfoundry - The value of bbs.LRPsMissing - Mean(5m) is within 5 and 10.')
+detect(when(LRPsMissing >=10)).publish('Pivotal Cloudfoundry - The value of bbs.LRPsMissing - Mean(5m) is greater or equal to 10.')
+detect(when((CrashedActualLRPs >= 5) and (CrashedActualLRPs < 10))).publish('Pivotal Cloudfoundry - The value of bbs.CrashedActualLRPs - Mean(5m) is within 5 and 10.')
+detect(when(CrashedActualLRPs >= 10)).publish('Pivotal Cloudfoundry - The value of bbs.CrashedActualLRPs - Mean(5m) is greater or equal to 10.')
 
     EOF
   rule {
@@ -56,10 +62,25 @@ detect(when(RequestLatency >= 10)).publish('Pivotal Cloudfoundry - The value of 
     detect_label = "Pivotal Cloudfoundry - The value of bbs.RequestLatency - Mean(15m) is greater or equal to 10."
     severity     = "Critical"
   }
-  /*
+
  rule {
-    detect_label = "Pivotal Cloudfoundry - TaskAuctionsFailed - Critical."
-    severity     = "Critical"
+    detect_label = "Pivotal Cloudfoundry - The value of bbs.LRPsMissing - Mean(5m) is within 5 and 10."
+    severity     = "Minor"
   }
- */
+
+  rule {
+    detect_label = "Pivotal Cloudfoundry - The value of bbs.LRPsMissing - Mean(5m) is greater or equal to 10."
+    severity     = "Minor"
+  }
+
+ rule {
+    detect_label = "Pivotal Cloudfoundry - The value of bbs.CrashedActualLRPs - Mean(5m) is within 5 and 10."
+    severity     = "Minor"
+  }
+
+  rule {
+    detect_label = "Pivotal Cloudfoundry - The value of bbs.CrashedActualLRPs - Mean(5m) is greater or equal to 10."
+    severity     = "Minor"
+  }
+
 }
