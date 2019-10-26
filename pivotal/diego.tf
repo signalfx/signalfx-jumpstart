@@ -15,6 +15,7 @@ LRPsExtra = data('bbs.LRPsExtra', filter=filter('metric_source', 'cloudfoundry')
 RequestLatency = data('bbs.RequestLatency', filter=filter('metric_source', 'cloudfoundry')).mean(over='15m').publish(label='RequestLatency', enable=False)
 LRPsMissing = data('bbs.LRPsMissing', filter=filter('metric_source', 'cloudfoundry')).mean(over='5m').publish(label='LRPsMissing', enable=False)
 CrashedActualLRPs = data('bbs.CrashedActualLRPs', filter=filter('metric_source', 'cloudfoundry')).mean(over='5m').publish(label='CrashedActualLRPs', enable=False)
+LRPsRunning = data('bbs.LRPsRunning', filter=filter('metric_source', 'cloudfoundry')).mean(over='1h').publish(label='LRPsRunning', enable=False)
 
 detect((when((ConvergenceLRPDuration >= 10) and (ConvergenceLRPDuration < 20)))).publish('Pivotal Cloudfoundry - ConvergenceLRPDuration - Minor.')
 detect(when(ConvergenceLRPDuration >= 20 )).publish('Pivotal Cloudfoundry - ConvergenceLRPDuration - Critical.')
@@ -27,6 +28,8 @@ detect(when((LRPsMissing >= 5) and (LRPsMissing < 10))).publish('Pivotal Cloudfo
 detect(when(LRPsMissing >=10)).publish('Pivotal Cloudfoundry - The value of bbs.LRPsMissing - Mean(5m) is greater or equal to 10.')
 detect(when((CrashedActualLRPs >= 5) and (CrashedActualLRPs < 10))).publish('Pivotal Cloudfoundry - The value of bbs.CrashedActualLRPs - Mean(5m) is within 5 and 10.')
 detect(when(CrashedActualLRPs >= 10)).publish('Pivotal Cloudfoundry - The value of bbs.CrashedActualLRPs - Mean(5m) is greater or equal to 10.')
+against_recent.detector_mean_std(stream=LRPsRunning, current_window='1h', historical_window='2h', fire_num_stddev=3, clear_num_stddev=2.5, orientation='out_of_band', ignore_extremes=True, calculation_mode='vanilla').publish('Pivotal Cloudfoundry - LRPsRunning - Mean(1h) in the last 1h are more than 3 standard deviation(s) above or below the mean of its preceding 1h.')
+against_recent.detector_mean_std(stream=LRPsRunning, current_window='1h', historical_window='2h', fire_num_stddev=6, clear_num_stddev=2.5, orientation='out_of_band', ignore_extremes=True, calculation_mode='vanilla').publish('Pivotal Cloudfoundry - LRPsRunning - Mean(1h) in the last 1h are more than 6 standard deviation(s) above or below the mean of its preceding 1h.')
 
     EOF
   rule {
@@ -80,7 +83,16 @@ detect(when(CrashedActualLRPs >= 10)).publish('Pivotal Cloudfoundry - The value 
 
   rule {
     detect_label = "Pivotal Cloudfoundry - The value of bbs.CrashedActualLRPs - Mean(5m) is greater or equal to 10."
+    severity     = "Critical"
+  }
+
+rule {
+    detect_label = "Pivotal Cloudfoundry - LRPsRunning - Mean(1h) in the last 1h are more than 3 standard deviation(s) above or below the mean of its preceding 1h."
     severity     = "Minor"
   }
 
+rule {
+    detect_label = "Pivotal Cloudfoundry - LRPsRunning - Mean(1h) in the last 1h are more than 6 standard deviation(s) above or below the mean of its preceding 1h."
+    severity     = "Critical"
+  }
 }
