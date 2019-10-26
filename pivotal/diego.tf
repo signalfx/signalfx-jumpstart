@@ -6,14 +6,18 @@ resource "signalfx_detector" "pivotal_cloudfoundry_diego_errors" {
 
 from signalfx.detectors.against_periods import against_periods
 from signalfx.detectors.against_recent import against_recent
+from signalfx.detectors.not_reporting import not_reporting
 
 A = data('bbs.ConvergenceLRPDuration', filter=filter('metric_source', 'cloudfoundry'), rollup='max').max(over='15m').publish(label='A')
-B = (A/1000000000).publish(label='B')
-C = data('bbs.Domain.cf-apps', filter=filter('metric_source', 'cloudfoundry')).publish(label='C')
+ConvergenceLRPDuration= (A/1000000000).publish(label='ConvergenceLRPDuration')
+cf_apps = data('bbs.Domain.cf-apps', filter=filter('metric_source', 'cloudfoundry')).publish(label='cf_apps')
+LRPsExtra = data('bbs.LRPsExtra', filter=filter('metric_source', 'cloudfoundry')).mean_plus_stddev(stddevs=1, over='5m').publish(label='LRPsExtra', enable=False)
 
-detect((when((A >= 10) and (A < 20)))).publish('Pivotal Cloudfoundry - ConvergenceLRPDuration - Minor.')
-detect(when(A >= 20 )).publish('Pivotal Cloudfoundry - ConvergenceLRPDuration - Critical.')
-
+detect((when((ConvergenceLRPDuration >= 10) and (ConvergenceLRPDuration < 20)))).publish('Pivotal Cloudfoundry - ConvergenceLRPDuration - Minor.')
+detect(when(ConvergenceLRPDuration >= 20 )).publish('Pivotal Cloudfoundry - ConvergenceLRPDuration - Critical.')
+detect(when((LRPsExtra >= 5) and (LRPsExtra < 10))).publish('Pivotal Cloudfoundry - Diego has more LRPs running than expected Minor.')
+detect(when(LRPsExtra >= 10)).publish('Pivotal Cloudfoundry - Diego has more LRPs running than expected Critical.')
+not_reporting.detector(stream=cf_apps, resource_identifier=None, duration='5m').publish('Pivotal Cloudfoundry - The signal bbs.Domain.cf-apps has not reported for 5m.')
     EOF
   rule {
     detect_label = "Pivotal Cloudfoundry - ConvergenceLRPDuration - Minor."
@@ -24,15 +28,21 @@ detect(when(A >= 20 )).publish('Pivotal Cloudfoundry - ConvergenceLRPDuration - 
     detect_label = "Pivotal Cloudfoundry - ConvergenceLRPDuration - Critical."
     severity     = "Critical"
   }
-  /*
+
   rule {
-    detect_label = "Pivotal Cloudfoundry - FetchStatesDuration > 2 sec."
+    detect_label = "Pivotal Cloudfoundry - Diego has more LRPs running than expected Minor."
     severity     = "Minor"
   }
   rule {
-    detect_label = "Pivotal Cloudfoundry - FetchStatesDuration > 5 sec."
+    detect_label = "Pivotal Cloudfoundry - Diego has more LRPs running than expected Critical."
+    severity     = "Minor"
+  }
+  
+  rule {
+    detect_label = "Pivotal Cloudfoundry - The signal bbs.Domain.cf-apps has not reported for 5m."
     severity     = "Critical"
   }
+  /*
   rule {
     detect_label = "Pivotal Cloudfoundry - LRPAuctionsStarted Historical norm deviation."
     severity     = "Warning"
