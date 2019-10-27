@@ -51,22 +51,22 @@ against_recent.detector_mean_std(stream=LRPsRunning, current_window='1h', histor
     detect_label = "Pivotal Cloudfoundry - Diego has more LRPs running than expected Critical."
     severity     = "Minor"
   }
-  
+
   rule {
     detect_label = "Pivotal Cloudfoundry - The signal bbs.Domain.cf-apps has not reported for 5m."
     severity     = "Critical"
   }
-  
+
   rule {
     detect_label = "Pivotal Cloudfoundry - The value of bbs.RequestLatency - Mean(15m) is within 5 and 10."
     severity     = "Minor"
   }
- rule {
+  rule {
     detect_label = "Pivotal Cloudfoundry - The value of bbs.RequestLatency - Mean(15m) is greater or equal to 10."
     severity     = "Critical"
   }
 
- rule {
+  rule {
     detect_label = "Pivotal Cloudfoundry - The value of bbs.LRPsMissing - Mean(5m) is within 5 and 10."
     severity     = "Minor"
   }
@@ -76,7 +76,7 @@ against_recent.detector_mean_std(stream=LRPsRunning, current_window='1h', histor
     severity     = "Minor"
   }
 
- rule {
+  rule {
     detect_label = "Pivotal Cloudfoundry - The value of bbs.CrashedActualLRPs - Mean(5m) is within 5 and 10."
     severity     = "Minor"
   }
@@ -86,12 +86,12 @@ against_recent.detector_mean_std(stream=LRPsRunning, current_window='1h', histor
     severity     = "Critical"
   }
 
-rule {
+  rule {
     detect_label = "Pivotal Cloudfoundry - LRPsRunning - Mean(1h) in the last 1h are more than 3 standard deviation(s) above or below the mean of its preceding 1h."
     severity     = "Minor"
   }
 
-rule {
+  rule {
     detect_label = "Pivotal Cloudfoundry - LRPsRunning - Mean(1h) in the last 1h are more than 6 standard deviation(s) above or below the mean of its preceding 1h."
     severity     = "Critical"
   }

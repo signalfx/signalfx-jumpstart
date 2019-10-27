@@ -24,7 +24,7 @@ countdown.hours_left_stream_detector(stream=CapacityRemainingDisk, minimum_value
     detect_label = "Pivotal Cloudfoundry - CapacityRemainingMemory not being reported."
     severity     = "Minor"
   }
- rule {
+  rule {
     detect_label = "Pivotal Cloudfoundry - CapacityRemainingMemory 5 Minute Minumum is within 32GB  and 64GB."
     severity     = "Minor"
   }
@@ -32,7 +32,7 @@ countdown.hours_left_stream_detector(stream=CapacityRemainingDisk, minimum_value
     detect_label = "Pivotal Cloudfoundry - CapacityRemainingMemory 5 Minute Minumum is less or Equal to 32GB."
     severity     = "Critical"
   }
- rule {
+  rule {
     detect_label = "Pivotal Cloudfoundry - CapacityRemainingDisk - (assumed to be decreasing) is projected to decrease to 6 in 48 hour(s)."
     severity     = "Critical"
   }
