@@ -1,5 +1,5 @@
 resource "signalfx_detector" "pivotal_cloudfoundry_auctioneer_errors" {
-  name         = "[SFx] Pivotal cloudFoundry Auctioneer errors"
+  name         = "[SFx] Pivotal CloudFoundry Auctioneer errors"
   description  = "Alerts for various Pivotal CloudFoundry Auctioneer related error scenarios"
   program_text = <<-EOF
 

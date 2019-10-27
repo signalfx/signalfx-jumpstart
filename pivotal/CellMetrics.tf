@@ -1,6 +1,6 @@
 resource "signalfx_detector" "pivotal_cloudfoundry_DCM_errors" {
-  name         = "[SFx] Pivotal cloudFoundry Diego Ceel Metrics errors"
-  description  = "Alerts for various Pivotal CloudFoundry Log related error scenarios"
+  name         = "[SFx] Pivotal CloudFoundry Diego Cell Metrics errors"
+  description  = "Alerts for various Pivotal CloudFoundry Diego Cell Metricsrelated error scenarios"
   program_text = <<-EOF
 
 

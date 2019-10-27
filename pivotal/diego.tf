@@ -1,5 +1,5 @@
 resource "signalfx_detector" "pivotal_cloudfoundry_diego_errors" {
-  name         = "[SFx] Pivotal cloudFoundry diego errors"
+  name         = "[SFx] Pivotal CloudFoundry Diego errors"
   description  = "Alerts for various Pivotal CloudFoundry Diego related error scenarios"
   program_text = <<-EOF
 
