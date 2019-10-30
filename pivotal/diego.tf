@@ -35,64 +35,77 @@ against_recent.detector_mean_std(stream=LRPsRunning, current_window='1h', histor
   rule {
     detect_label = "Pivotal Cloudfoundry - ConvergenceLRPDuration - Minor."
     severity     = "Minor"
+    tip = "Check BBS logs for errors./nTry vertically scaling the BBS VM resources up. For example, add more CPUs or memory depending on its system.cpu/system.memory metrics./nConsider vertically scaling the PAS backing database, if system.cpu and system.memory metrics for the database instances are high./nIf that does not solve the issue, pull the BBS logs and contact Pivotal Support for additional troubleshooting."
   }
 
   rule {
     detect_label = "Pivotal Cloudfoundry - ConvergenceLRPDuration - Critical."
     severity     = "Critical"
+    tip = "Check BBS logs for errors./nTry vertically scaling the BBS VM resources up. For example, add more CPUs or memory depending on its system.cpu/system.memory metrics./nConsider vertically scaling the PAS backing database, if system.cpu and system.memory metrics for the database instances are high./nIf that does not solve the issue, pull the BBS logs and contact Pivotal Support for additional troubleshooting."
   }
 
   rule {
     detect_label = "Pivotal Cloudfoundry - Diego has more LRPs running than expected Minor."
     severity     = "Minor"
+    tip ="Review the BBS logs for proper operation or errors, looking for detailed error messages./nIf the condition persists, pull the BBS logs and contact Pivotal Support."   
   }
 
   rule {
     detect_label = "Pivotal Cloudfoundry - Diego has more LRPs running than expected Critical."
-    severity     = "Minor"
-  }
+    severity     = "Critical"
+    tip = "Review the BBS logs for proper operation or errors, looking for detailed error messages./nIf the condition persists, pull the BBS logs and contact Pivotal Support."
+ }
 
   rule {
     detect_label = "Pivotal Cloudfoundry - The signal bbs.Domain.cf-apps has not reported for 5m."
     severity     = "Critical"
+    tip = "Check the BBS and Clock Global (Cloud Controller clock) logs./nIf the problem continues, pull the BBS logs and Clock Global (Cloud Controller clock) logs and contact Pivotal Support to say that the cf-apps domain is not being kept fresh."
   }
 
   rule {
     detect_label = "Pivotal Cloudfoundry - The value of bbs.RequestLatency - Mean(15m) is within 5 and 10."
-    severity     = "Minor"
+     severity     = "Minor"
+    tip = "Check CPU and memory statistics in Ops Manager./nCheck BBS logs for faults and errors that can indicate issues with BBS./nTry scaling the BBS VM resources up. For example, add more CPUs/memory depending on its system.cpu/system.memory metrics./nConsider vertically scaling the PAS backing database, if system.cpu and system.memory metrics for the database instances are high./nIf the above steps do not solve the issue, collect a sample of the cell logs from the BBS VMs and contact Pivotal Support to troubleshoot further."
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - The value of bbs.RequestLatency - Mean(15m) is greater or equal to 10."
     severity     = "Critical"
+    tip = "Check CPU and memory statistics in Ops Manager./nCheck BBS logs for faults and errors that can indicate issues with BBS./nTry scaling the BBS VM resources up. For example, add more CPUs/memory depending on its system.cpu/system.memory metrics./nConsider vertically scaling the PAS backing database, if system.cpu and system.memory metrics for the database instances are high./nIf the above steps do not solve the issue, collect a sample of the cell logs from the BBS VMs and contact Pivotal Support to troubleshoot further."
   }
 
   rule {
     detect_label = "Pivotal Cloudfoundry - The value of bbs.LRPsMissing - Mean(5m) is within 5 and 10."
     severity     = "Minor"
+    tip = "eview the BBS logs for proper operation or errors, looking for detailed error messages./nIf the condition persists, pull the BBS logs and contact Pivotal Support."
   }
 
   rule {
     detect_label = "Pivotal Cloudfoundry - The value of bbs.LRPsMissing - Mean(5m) is greater or equal to 10."
     severity     = "Minor"
+    tip = "eview the BBS logs for proper operation or errors, looking for detailed error messages./nIf the condition persists, pull the BBS logs and contact Pivotal Support."
   }
 
   rule {
     detect_label = "Pivotal Cloudfoundry - The value of bbs.CrashedActualLRPs - Mean(5m) is within 5 and 10."
     severity     = "Minor"
+    tip = "Look at the BBS logs for apps that are crashing and at the cell logs to see if the problem is with the apps themselves, rather than a platform issue./nefore contacting Pivotal Support, pull the BBS logs and, if particular apps are the problem, pull the logs from their Diego cells too."
   }
 
   rule {
     detect_label = "Pivotal Cloudfoundry - The value of bbs.CrashedActualLRPs - Mean(5m) is greater or equal to 10."
     severity     = "Critical"
-  }
+    tip = "Look at the BBS logs for apps that are crashing and at the cell logs to see if the problem is with the apps themselves, rather than a platform issue./nefore contacting Pivotal Support, pull the BBS logs and, if particular apps are the problem, pull the logs from their Diego cells too."
+ }
 
   rule {
     detect_label = "Pivotal Cloudfoundry - LRPsRunning - Mean(1h) in the last 1h are more than 3 standard deviation(s) above or below the mean of its preceding 1h."
     severity     = "Minor"
+    tip = "Scale components as necessary."
   }
 
   rule {
     detect_label = "Pivotal Cloudfoundry - LRPsRunning - Mean(1h) in the last 1h are more than 6 standard deviation(s) above or below the mean of its preceding 1h."
     severity     = "Critical"
+    tip = "Scale components as necessary."
   }
 }
