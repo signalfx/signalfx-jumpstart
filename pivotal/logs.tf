@@ -23,22 +23,27 @@ against_recent.detector_mean_std(stream=LOG_INFO, current_window='10m', historic
   rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity error."
     severity     = "Minor"
+    tip = "Verify the logs for any application that may cause this"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity debug."
     severity     = "Warning"
+    tip = "Verify the logs for any application that may cause this"
   }
-  rule {
+    rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity debug2."
     severity     = "Warning"
+    tip = "Verify the logs for any application that may cause this"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity fatal."
     severity     = "Critical"
+    tip = "Verify the logs for any application that may cause this"
   }
   rule {
     detect_label = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity info."
     severity     = "Warning"
+    tip = "Verify the logs for any application that may cause this"
   }
 
 }

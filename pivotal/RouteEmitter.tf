@@ -19,11 +19,13 @@ detect(when(RouteEmitterSyncDuration >= 10)).publish('Pivotal Cloudfoundry - Rou
   rule {
     detect_label = "Pivotal Cloudfoundry - RouteEmitterSyncDuration between 5 and 10 seconds."
     severity     = "Minor"
+    tip = "If all or many jobs showing as impacted, there is likely an issue with Diego.\n 1 - Investigate the Route Emitter and Diego BBS logs for errors.\n2 - Verify that app routes are functional by making a request to an app, pushing an app and pinging it, or if applicable, checking that your smoke tests have passed.\nIf one or a few jobs showing as impacted, there is likely a connectivity issue and the impacted job should be investigated further."
   }
 
 rule {
     detect_label = "Pivotal Cloudfoundry - RouteEmitterSyncDuration greater or eaqual to 10 seconds."
     severity     = "Minor"
+    tip = "If all or many jobs showing as impacted, there is likely an issue with Diego.\n 1 - Investigate the Route Emitter and Diego BBS logs for errors.\n2 - Verify that app routes are functional by making a request to an app, pushing an app and pinging it, or if applicable, checking that your smoke tests have passed.\nIf one or a few jobs showing as impacted, there is likely a connectivity issue and the impacted job should be investigated further."
   }
 
 }
