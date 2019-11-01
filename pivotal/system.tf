@@ -15,6 +15,6 @@ detect(when(system_healthy > 1)).publish('Pivotal Cloudfoundry - The value of sy
   rule {
     detect_label = "Pivotal Cloudfoundry - The value of system.healthy - Mean(5m) is above 1."
     severity     = "Minor"
-    tip = "Investigate CF logs for the unhealthy component(s)."
-     } 
+    tip          = "Investigate CF logs for the unhealthy component(s)."
+  }
 }
