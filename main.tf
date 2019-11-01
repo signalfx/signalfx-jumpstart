@@ -19,8 +19,8 @@ module "docker" {
   source = "./docker"
 }
 
-module "dashboards" {
-  source = "./dashboards"
+module "usage_dashboard" {
+  source = "./dashboards/usage"
 }
 
 module "gcp" {
