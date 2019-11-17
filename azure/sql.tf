@@ -18,23 +18,23 @@ resource "signalfx_detector" "azure_SQL_errors" {
     detect((when(F > 95)) or (when(G > 95))).publish('Azure SQL physical data read above 95%')
   EOF
   rule {
-    detect_label = "Azure SQL elasticpools CPU % is significantly greater than the last 3 hours"
-    severity     = "Warning"
-    parameterized_body = "${var.message_body}"    
+    detect_label       = "Azure SQL elasticpools CPU % is significantly greater than the last 3 hours"
+    severity           = "Warning"
+    parameterized_body = "${var.message_body}"
   }
   rule {
-    detect_label = "Azure SQL DTU Consumption is greater than 80% over the past 10 minutes"
-    severity     = "Minor"
-    parameterized_body = "${var.message_body}"    
+    detect_label       = "Azure SQL DTU Consumption is greater than 80% over the past 10 minutes"
+    severity           = "Minor"
+    parameterized_body = "${var.message_body}"
   }
   rule {
-    detect_label = "Azure SQL CPU % has been at 100% for the past 5 minutes"
-    severity     = "Critical"
-    parameterized_body = "${var.message_body}"    
+    detect_label       = "Azure SQL CPU % has been at 100% for the past 5 minutes"
+    severity           = "Critical"
+    parameterized_body = "${var.message_body}"
   }
   rule {
-    detect_label = "Azure SQL physical data read above 95%"
-    severity     = "Warning"
-    parameterized_body = "${var.message_body}"    
+    detect_label       = "Azure SQL physical data read above 95%"
+    severity           = "Warning"
+    parameterized_body = "${var.message_body}"
   }
 }
