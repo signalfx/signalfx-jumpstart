@@ -1,5 +1,5 @@
 variable "message_body" {
-  type    = "string"
+  type = "string"
 
   default = <<-EOF
     {{#if anomalous}}
