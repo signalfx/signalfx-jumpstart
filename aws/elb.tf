@@ -1,7 +1,7 @@
 resource "signalfx_detector" "httpcode_elb_5xx" {
-  name         = "[SFx] AWS/ELB has high 5XX response ratio"
-  description  = "Alerts when 10% of requests were 5XX for last 5m"
-  
+  name        = "[SFx] AWS/ELB has high 5XX response ratio"
+  description = "Alerts when 10% of requests were 5XX for last 5m"
+
   program_text = <<-EOF
     A = data('HTTPCode_ELB_5XX', filter=(filter('namespace', 'AWS/ELB') and filter('stat', 'count') and filter('LoadBalancerName', '*'))).publish(label='HTTPCode_ELB_5XX', enable=False)
     B = data('RequestCount', filter=(filter('namespace', 'AWS/ELB') and filter('stat', 'count') and filter('LoadBalancerName', '*'))).publish(label='RequestCount', enable=False)
