@@ -26,8 +26,9 @@ resource "signalfx_detector" "k8s_cluster_memory_overcommitted" {
     detect(when(D > 0)).publish('K8S Cluster Memory Overcommitted')
   EOF
   rule {
-    detect_label = "K8S Cluster Memory Overcommitted"
-    severity     = "Warning"
+    detect_label       = "K8S Cluster Memory Overcommitted"
+    severity           = "Warning"
+    parameterized_body = "${var.message_body}"
   }
 }
 
@@ -41,8 +42,9 @@ resource "signalfx_detector" "k8s_daemonset_ready_vs_scheduled" {
     detect((when((C > 0) or (C < 0), lasting='5m', at_least=0.95))).publish('K8S Cluster DaemonSet ready and scheduled have diverged')
   EOF
   rule {
-    detect_label = "K8S Cluster DaemonSet ready and scheduled have diverged"
-    severity     = "Major"
+    detect_label       = "K8S Cluster DaemonSet ready and scheduled have diverged"
+    severity           = "Major"
+    parameterized_body = "${var.message_body}"
   }
 }
 

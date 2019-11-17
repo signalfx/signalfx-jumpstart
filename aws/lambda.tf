@@ -12,15 +12,18 @@ resource "signalfx_detector" "lambda_errors" {
     against_periods.detector_mean_std(stream=cold_start_errors, window_to_compare='10m', space_between_windows='24h', num_windows=4, fire_num_stddev=3, clear_num_stddev=2.5, discard_historical_outliers=True, orientation='above').publish('AWS/Lambda Wrapper coldstart count has been greater then historical norm during the past 10 minutes')
   EOF
   rule {
-    detect_label = "AWS/Lambda function error rate is greater than 10 for the last 5m"
-    severity     = "Major"
+    detect_label       = "AWS/Lambda function error rate is greater than 10 for the last 5m"
+    severity           = "Major"
+    parameterized_body = "${var.message_body}"
   }
   rule {
-    detect_label = "AWS/Lambda Lambda duration has been greater then historical norm during the past 15 minutes"
-    severity     = "Minor"
+    detect_label       = "AWS/Lambda Lambda duration has been greater then historical norm during the past 15 minutes"
+    severity           = "Minor"
+    parameterized_body = "${var.message_body}"
   }
   rule {
-    detect_label = "AWS/Lambda Wrapper coldstart count has been greater then historical norm during the past 10 minutes"
-    severity     = "Warning"
+    detect_label       = "AWS/Lambda Wrapper coldstart count has been greater then historical norm during the past 10 minutes"
+    severity           = "Warning"
+    parameterized_body = "${var.message_body}"
   }
 }

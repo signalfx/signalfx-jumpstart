@@ -7,8 +7,9 @@ resource "signalfx_detector" "k8s_pod_status" {
     against_recent.detector_mean_std(stream=A, current_window='5m', historical_window='30m', fire_num_stddev=2, clear_num_stddev=2, orientation='above', ignore_extremes=True, calculation_mode='vanilla').publish('K8S Pods in waiting state higher than normal')
   EOF
   rule {
-    detect_label = "K8S Pods in waiting state higher than normal"
-    severity     = "Critical"
+    detect_label       = "K8S Pods in waiting state higher than normal"
+    severity           = "Critical"
+    parameterized_body = "${var.message_body}"
   }
 }
 
@@ -21,8 +22,9 @@ resource "signalfx_detector" "k8s_pods_active" {
     against_recent.detector_mean_std(stream=A, current_window='10m', historical_window='1h', fire_num_stddev=3.5, clear_num_stddev=3, orientation='out_of_band', ignore_extremes=True, calculation_mode='vanilla').publish('K8S Pods active changed significantly')
   EOF
   rule {
-    detect_label = "K8S Pods active changed significantly"
-    severity     = "Critical"
+    detect_label       = "K8S Pods active changed significantly"
+    severity           = "Critical"
+    parameterized_body = "${var.message_body}"
   }
 }
 
@@ -37,8 +39,9 @@ resource "signalfx_detector" "k8s_pods_failed_pending_ratio" {
     against_recent.detector_mean_std(stream=C, current_window='5m', historical_window='30m', fire_num_stddev=2.5, clear_num_stddev=2, orientation='above', ignore_extremes=True, calculation_mode='vanilla').publish('K8S Pods failed and pending ratio')
   EOF
   rule {
-    detect_label = "K8S Pods failed and pending ratio"
-    severity     = "Critical"
+    detect_label       = "K8S Pods failed and pending ratio"
+    severity           = "Critical"
+    parameterized_body = "${var.message_body}"
   }
 }
 

@@ -10,11 +10,13 @@ resource "signalfx_detector" "gcp_cloud_storage_errors" {
     detect(when(((C/D)*100) >= 10, lasting='5m')).publish('GCP Cloud Storage 10% of requests were 5xx for 5m')
   EOF
   rule {
-    detect_label = "GCP Cloud Storage 10% of requests were 4xx for 5m"
-    severity     = "Major"
+    detect_label       = "GCP Cloud Storage 10% of requests were 4xx for 5m"
+    severity           = "Major"
+    parameterized_body = "${var.message_body}"
   }
   rule {
-    detect_label = "GCP Cloud Storage 10% of requests were 5xx for 5m"
-    severity     = "Major"
+    detect_label       = "GCP Cloud Storage 10% of requests were 5xx for 5m"
+    severity           = "Major"
+    parameterized_body = "${var.message_body}"
   }
 }

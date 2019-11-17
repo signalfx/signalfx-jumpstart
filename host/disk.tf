@@ -10,16 +10,20 @@ resource "signalfx_detector" "disk_space_low" {
     countdown.hours_left_stream_incr_detector(stream=B, maximum_capacity=100, lower_threshold=24, fire_lasting=lasting('15m', 1), clear_threshold=36, clear_lasting=lasting('15m', 1), use_double_ewma=False).publish('Disk space utilization is projected to reach 100% within 24 hours')
   EOF
   rule {
-    detect_label = "Disk space has filled upto 80%"
-    severity     = "Major"
+    detect_label       = "Disk space has filled upto 80%"
+    severity           = "Major"
+    parameterized_body = "${var.message_body}"
   }
   rule {
-    detect_label = "Disk space has filled upto 90%"
-    severity     = "Critical"
+    detect_label       = "Disk space has filled upto 90%"
+    severity           = "Critical"
+    parameterized_body = "${var.message_body}"
+
   }
   rule {
-    detect_label = "Disk space utilization is projected to reach 100% within 24 hours"
-    severity     = "Critical"
+    detect_label       = "Disk space utilization is projected to reach 100% within 24 hours"
+    severity           = "Critical"
+    parameterized_body = "${var.message_body}"
   }
 
 }

@@ -13,6 +13,7 @@ resource "signalfx_detector" "k8s_node_cpu_imbalance" {
     detect_label = "K8S Cluster CPU usage is imbalanced"
     severity     = "Critical"
     disabled     = true
+    parameterized_body  = "${var.message_body}"
   }
 }
 */

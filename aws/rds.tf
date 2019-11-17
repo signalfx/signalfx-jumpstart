@@ -60,8 +60,9 @@ resource "signalfx_detector" "rds_deadlocks" {
     detect(when(Deadlocks > 0.02, lasting='5m')).publish('AWS/RDS there are more that 0.02 deadlocks/s for 5 minutes')
   EOF
   rule {
-    detect_label = "AWS/RDS there are more that 0.02 deadlocks/s for 5 minutes"
-    severity     = "Warning"
+    detect_label       = "AWS/RDS there are more that 0.02 deadlocks/s for 5 minutes"
+    severity           = "Warning"
+    parameterized_body = "${var.message_body}"
   }
 }
 
@@ -73,8 +74,9 @@ resource "signalfx_detector" "rds_read_latency" {
   detect(when(ReadLatency > 100, lasting='5s')).publish('AWS/RDS read latency has been above 100ms for at least 5 seconds')
   EOF
   rule {
-    detect_label = "AWS/RDS read latency has been above 100ms for at least 5 seconds"
-    severity     = "Major"
+    detect_label       = "AWS/RDS read latency has been above 100ms for at least 5 seconds"
+    severity           = "Major"
+    parameterized_body = "${var.message_body}"
   }
 }
 
@@ -87,7 +89,8 @@ resource "signalfx_detector" "rds_free_memory" {
     detect((when(FreeableMemory < 209715200, lasting='1h') and when(SwapUsage > 52428800, lasting='1h'))).publish('AWS/RDS free memory is below 200MB and swap space above 50MB for 1h')
   EOF
   rule {
-    detect_label = "AWS/RDS free memory is below 200MB and swap space above 50MB for 1h"
-    severity     = "Major"
+    detect_label       = "AWS/RDS free memory is below 200MB and swap space above 50MB for 1h"
+    severity           = "Major"
+    parameterized_body = "${var.message_body}"
   }
 }

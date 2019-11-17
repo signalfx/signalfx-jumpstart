@@ -7,8 +7,9 @@ resource "signalfx_detector" "k8s_container_restarts" {
     against_recent.detector_mean_std(stream=A, current_window='5m', historical_window='30m', fire_num_stddev=2.5, clear_num_stddev=2, orientation='above', ignore_extremes=True, calculation_mode='vanilla').publish('K8S Container restart count is higher than normal')
   EOF
   rule {
-    detect_label = "K8S Container restart count is higher than normal"
-    severity     = "Warning"
+    detect_label       = "K8S Container restart count is higher than normal"
+    severity           = "Warning"
+    parameterized_body = "${var.message_body}"
   }
 }
 
@@ -21,9 +22,10 @@ resource "signalfx_detector" "k8s_container_cpu" {
     against_recent.detector_mean_std(stream=A, current_window='5m', historical_window='30m', fire_num_stddev=2.5, clear_num_stddev=2, orientation='above', ignore_extremes=True, calculation_mode='vanilla').publish('K8S Container CPU Usage higher than normal, and increasing')
   EOF
   rule {
-    detect_label = "K8S Container CPU Usage higher than normal, and increasing"
-    severity     = "Warning"
-    disabled     = true
+    detect_label       = "K8S Container CPU Usage higher than normal, and increasing"
+    severity           = "Warning"
+    disabled           = true
+    parameterized_body = "${var.message_body}"
   }
 }
 
@@ -37,8 +39,9 @@ D = (A).mean(over='5m').publish(label='D', enable=False)
 population.detector(population_stream=A, group_by_property=None, fire_num_dev=3.5, fire_lasting=lasting('15m', 1), clear_num_dev=3, clear_lasting=lasting('15m', 1), strategy='median_MAD', orientation='above').publish('K8S Container Memory Usage higher than normal, and increasing')
   EOF
   rule {
-    detect_label = "K8S Container Memory Usage higher than normal, and increasing"
-    severity     = "Warning"
+    detect_label       = "K8S Container Memory Usage higher than normal, and increasing"
+    severity           = "Warning"
+    parameterized_body = "${var.message_body}"
   }
 }
 

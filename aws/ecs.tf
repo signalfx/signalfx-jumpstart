@@ -13,7 +13,8 @@ resource "signalfx_detector" "aws_ecs_smartagent_cpu" {
     detect(when(D > 90, lasting='5m')).publish('AWS/ECS Cluster High CPU 5m')
   EOF
   rule {
-    detect_label = "AWS/ECS Cluster High CPU 5m"
-    severity     = "Major"
+    detect_label       = "AWS/ECS Cluster High CPU 5m"
+    severity           = "Major"
+    parameterized_body = "${var.message_body}"
   }
 }

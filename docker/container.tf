@@ -9,12 +9,13 @@ resource "signalfx_detector" "container_cpu_utilization" {
     detect(when(not (C > 80) and not (C < 70), lasting='10m')).publish('Container CPU utilization % is within 70 and 80 for 10m')
   EOF
   rule {
-    detect_label = "Container CPU utilization % is within 70 and 80 for 10m"
-    severity     = "Warning"
-
+    detect_label       = "Container CPU utilization % is within 70 and 80 for 10m"
+    severity           = "Warning"
+    parameterized_body = "${var.message_body}"
   }
   rule {
-    detect_label = "Container CPU utilization % is above 80 for 5m"
-    severity     = "Major"
+    detect_label       = "Container CPU utilization % is above 80 for 5m"
+    severity           = "Major"
+    parameterized_body = "${var.message_body}"
   }
 }
