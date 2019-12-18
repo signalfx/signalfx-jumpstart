@@ -28,7 +28,7 @@ resource "signalfx_detector" "k8s_cluster_memory_overcommitted" {
   rule {
     detect_label       = "K8S Cluster Memory Overcommitted"
     severity           = "Warning"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }
 
@@ -44,7 +44,7 @@ resource "signalfx_detector" "k8s_daemonset_ready_vs_scheduled" {
   rule {
     detect_label       = "K8S Cluster DaemonSet ready and scheduled have diverged"
     severity           = "Major"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }
 

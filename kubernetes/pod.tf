@@ -9,7 +9,7 @@ resource "signalfx_detector" "k8s_pod_status" {
   rule {
     detect_label       = "K8S Pods in waiting state higher than normal"
     severity           = "Critical"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }
 
@@ -24,7 +24,7 @@ resource "signalfx_detector" "k8s_pods_active" {
   rule {
     detect_label       = "K8S Pods active changed significantly"
     severity           = "Critical"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }
 
@@ -41,7 +41,7 @@ resource "signalfx_detector" "k8s_pods_failed_pending_ratio" {
   rule {
     detect_label       = "K8S Pods failed and pending ratio"
     severity           = "Critical"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }
 

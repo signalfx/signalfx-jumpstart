@@ -19,31 +19,31 @@ resource "signalfx_detector" "pivotal_cloudfoundry_log_errors" {
     detect_label       = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity error."
     severity           = "Minor"
     tip                = "Verify the logs for any application that may cause this"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity debug."
     severity           = "Warning"
     tip                = "Verify the logs for any application that may cause this"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity debug2."
     severity           = "Warning"
     tip                = "Verify the logs for any application that may cause this"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity fatal."
     severity           = "Critical"
     tip                = "Verify the logs for any application that may cause this"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - Sudden increase of n# of log messages of severity info."
     severity           = "Warning"
     tip                = "Verify the logs for any application that may cause this"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 
 }

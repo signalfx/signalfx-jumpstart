@@ -7,8 +7,9 @@ resource "signalfx_detector" "rds_free_space" {
     countdown.hours_left_stream_detector(stream=free, minimum_value=20, lower_threshold=12, fire_lasting=lasting('6m', 0.9), clear_threshold=84, clear_lasting=lasting('6m', 0.9), use_double_ewma=False).publish('AWS/RDS free disk space is expected to be below 20% in 12 hours')
   EOF
   rule {
-    detect_label = "AWS/RDS free disk space is expected to be below 20% in 12 hours"
-    severity     = "Warning"
+    detect_label       = "AWS/RDS free disk space is expected to be below 20% in 12 hours"
+    severity           = "Warning"
+    parameterized_body = var.message_body
   }
 }
 resource "signalfx_detector" "rds_DiskQueueDepth_historical_error" {
@@ -20,8 +21,9 @@ resource "signalfx_detector" "rds_DiskQueueDepth_historical_error" {
     against_periods.detector_mean_std(stream=A, window_to_compare='30m', space_between_windows='12h', num_windows=4, fire_num_stddev=10, clear_num_stddev=3, discard_historical_outliers=True, orientation='above').publish('AWS/RDS outstanding IOs (read/write requests) for the last 10 minutes where significantly higher than normal, as compared to the last 12 hours')
   EOF
   rule {
-    detect_label = "AWS/RDS outstanding IOs (read/write requests) for the last 10 minutes where significantly higher than normal, as compared to the last 12 hours"
-    severity     = "Minor"
+    detect_label       = "AWS/RDS outstanding IOs (read/write requests) for the last 10 minutes where significantly higher than normal, as compared to the last 12 hours"
+    severity           = "Minor"
+    parameterized_body = var.message_body
   }
 }
 
@@ -33,8 +35,9 @@ resource "signalfx_detector" "rds_CPU_high_error" {
     detect(when(A > 95)).publish('AWS/RDS CPU usage has been over 95% for the past 10 minutes')
   EOF
   rule {
-    detect_label = "AWS/RDS CPU usage has been over 95% for the past 10 minutes"
-    severity     = "Critical"
+    detect_label       = "AWS/RDS CPU usage has been over 95% for the past 10 minutes"
+    severity           = "Critical"
+    parameterized_body = var.message_body
   }
 }
 
@@ -47,8 +50,9 @@ resource "signalfx_detector" "rds_cpu_historical_norm" {
     against_periods.detector_mean_std(stream=A, window_to_compare='10m', space_between_windows='24h', num_windows=4, fire_num_stddev=5, clear_num_stddev=3, discard_historical_outliers=True, orientation='above').publish('AWS RDS CPU has been significantly higher for the past 10 minutes then the historical norm')
   EOF
   rule {
-    detect_label = "AWS RDS CPU has been significantly higher for the past 10 minutes then the historical norm"
-    severity     = "Warning"
+    detect_label       = "AWS RDS CPU has been significantly higher for the past 10 minutes then the historical norm"
+    severity           = "Warning"
+    parameterized_body = var.message_body
   }
 }
 
@@ -62,7 +66,7 @@ resource "signalfx_detector" "rds_deadlocks" {
   rule {
     detect_label       = "AWS/RDS there are more that 0.02 deadlocks/s for 5 minutes"
     severity           = "Warning"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }
 
@@ -76,7 +80,7 @@ resource "signalfx_detector" "rds_read_latency" {
   rule {
     detect_label       = "AWS/RDS read latency has been above 100ms for at least 5 seconds"
     severity           = "Major"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }
 
@@ -91,6 +95,6 @@ resource "signalfx_detector" "rds_free_memory" {
   rule {
     detect_label       = "AWS/RDS free memory is below 200MB and swap space above 50MB for 1h"
     severity           = "Major"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }

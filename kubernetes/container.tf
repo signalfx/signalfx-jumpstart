@@ -9,7 +9,7 @@ resource "signalfx_detector" "k8s_container_restarts" {
   rule {
     detect_label       = "K8S Container restart count is higher than normal"
     severity           = "Warning"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }
 
@@ -25,7 +25,7 @@ resource "signalfx_detector" "k8s_container_cpu" {
     detect_label       = "K8S Container CPU Usage higher than normal, and increasing"
     severity           = "Warning"
     disabled           = true
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }
 
@@ -41,7 +41,7 @@ population.detector(population_stream=A, group_by_property=None, fire_num_dev=3.
   rule {
     detect_label       = "K8S Container Memory Usage higher than normal, and increasing"
     severity           = "Warning"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }
 

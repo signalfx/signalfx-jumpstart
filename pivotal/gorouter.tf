@@ -14,20 +14,20 @@ resource "signalfx_detector" "pivotal_cloudfoundry_gorouter_errors" {
     detect_label       = "Pivotal Cloudfoundry - The number of Tasks that the auctioneer failed to place on Diego cellis between .5 and 1."
     severity           = "Minor"
     tip                = "To increase throughput and maintain low latency, scale the Gorouters either horizontally or vertically and watch that the system.cpu.user metric for the Gorouter stays in the suggested range of 60-70% CPU Utilization."
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - The number of Tasks that the auctioneer failed to place on Diego cell is greater or equal to 1."
     severity           = "Critical"
     tip                = "To increase throughput and maintain low latency, scale the Gorouters either horizontally or vertically and watch that the system.cpu.user metric for the Gorouter stays in the suggested range of 60-70% CPU Utilization."
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 
   rule {
     detect_label       = "Pivotal Cloudfoundry - gorouter latency above 100 ms"
     severity           = "Warning"
     tip                = "First inspect logs for network issues and indications of misbehaving backends./nIf it appears that the Gorouter needs to scale due to ongoing traffic congestion, do not scale on the latency metric alone. You should also look at the CPU utilization of the Gorouter VMs and keep it within a maximum 60-70% range./nResolve high utilization by scaling the Gorouter."
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 
 }

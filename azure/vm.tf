@@ -9,6 +9,6 @@ resource "signalfx_detector" "azure_cpu_historical_norm" {
   rule {
     detect_label       = "CPU % is significantly greater than normal, and increasing"
     severity           = "Warning"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }

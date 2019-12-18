@@ -11,6 +11,6 @@ resource "signalfx_detector" "httpcode_elb_5xx" {
   rule {
     detect_label       = "AWS/ELB 10% of requests were 5XX for last 5m"
     severity           = "Critical"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }

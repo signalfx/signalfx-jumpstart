@@ -26,51 +26,51 @@ resource "signalfx_detector" "pivotal_cloudfoundry_DCM_errors" {
     detect_label       = "Pivotal Cloudfoundry - CapacityRemainingMemory not being reported."
     severity           = "Minor"
     tip                = " Validate Diego service"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - CapacityRemainingMemory 5 Minute Minumum is within 32GB  and 64GB."
     severity           = "Minor"
     tip                = "Assign more resources to the cells or assign more cells./nScale additional Diego cells using Ops Manager"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - CapacityRemainingMemory 5 Minute Minumum is less or Equal to 32GB."
     severity           = "Critical"
     tip                = "Assign more resources to the cells or assign more cells./nScale additional Diego cells using Ops Manager"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - CapacityRemainingDisk - (assumed to be decreasing) is projected to decrease to 6 in 48 hour(s)."
     severity           = "Minor"
     tip                = "Assign more resources to the cells or assign more cells./nScale additional Diego cells using Ops Manager"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - RepBulkSyncDuration - Average Response is within 5 and 10 seconds."
     severity           = "Minor"
     tip                = "Investigate BBS logs for faults and errors./nIf a particular cell or cells appear problematic, pull logs for the cells and the BBS logs before contacting Pivotal Support."
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - RepBulkSyncDuration - Average Response is over 10 seconds."
     severity           = "Critical"
     tip                = "Investigate BBS logs for faults and errors./nIf a particular cell or cells appear problematic, pull logs for the cells and the BBS logs before contacting Pivotal Support."
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 
   rule {
     detect_label       = "Pivotal Cloudfoundry - The value of rep.GardenHealthCheckFailed is 1."
     severity           = "Minor"
     tip                = "Investigate Diego cell servers for faults and errors./n Contact Pivotal support"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 
   rule {
     detect_label       = "Pivotal Cloudfoundry - The value of rep.GardenHealthCheckFailed is above 1."
     severity           = "Critical"
     tip                = "Investigate Diego cell servers for faults and errors./n Contact Pivotal support"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 
 }

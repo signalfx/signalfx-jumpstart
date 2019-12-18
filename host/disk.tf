@@ -14,17 +14,17 @@ resource "signalfx_detector" "disk_space_low" {
   rule {
     detect_label       = "Disk space has filled upto greater than 80% but less than 90%"
     severity           = "Major"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Disk space has filled upto or is greater than 90%"
     severity           = "Critical"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
 
   }
   rule {
     detect_label       = "Disk space utilization is projected to reach 100% within 24 hours"
     severity           = "Critical"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }

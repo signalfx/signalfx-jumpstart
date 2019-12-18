@@ -14,16 +14,16 @@ resource "signalfx_detector" "lambda_errors" {
   rule {
     detect_label       = "AWS/Lambda function error rate is greater than 10 for the last 5m"
     severity           = "Major"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "AWS/Lambda Lambda duration has been greater then historical norm during the past 15 minutes"
     severity           = "Minor"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "AWS/Lambda Wrapper coldstart count has been greater then historical norm during the past 10 minutes"
     severity           = "Warning"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }

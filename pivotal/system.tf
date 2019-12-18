@@ -11,6 +11,6 @@ resource "signalfx_detector" "pivotal_cloudfoundry_system_errors" {
     detect_label       = "Pivotal Cloudfoundry - The value of system.healthy - Mean(5m) is above 1."
     severity           = "Minor"
     tip                = "Investigate CF logs for the unhealthy component(s)."
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }

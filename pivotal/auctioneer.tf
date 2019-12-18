@@ -21,42 +21,42 @@ resource "signalfx_detector" "pivotal_cloudfoundry_auctioneer_errors" {
     detect_label       = "Pivotal Cloudfoundry - AuctionsFailed - Minor."
     severity           = "Minor"
     tip                = "To best determine the root cause, examine the Auctioneer logs. Depending on the specific error and resource constraint, you may also find a failure reason in the Cloud Controller (CC) API./nInvestigate the health of your Diego cells to determine if they are the resource type causing the problem./nConsider scaling additional cells using Ops Manager./nIf scaling cells does not solve the problem, pull Diego brain logs and BBS node logs and contact Pivotal Support telling them that LRP auctions are failing."
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - AuctionsFailed - Critical."
     severity           = "Critical"
     tip                = "To best determine the root cause, examine the Auctioneer logs. Depending on the specific error and resource constraint, you may also find a failure reason in the Cloud Controller (CC) API./nInvestigate the health of your Diego cells to determine if they are the resource type causing the problem./nConsider scaling additional cells using Ops Manager./nIf scaling cells does not solve the problem, pull Diego brain logs and BBS node logs and contact Pivotal Support telling them that LRP auctions are failing."
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - FetchStatesDuration > 2 sec."
     severity           = "Minor"
     tip                = "Check the health of the cells by reviewing the logs and looking for errors./nReview IaaS console metrics./nInspect the Auctioneer logs to determine if one or more cells is taking significantly longer to fetch state than other cells. Relevant log lines will have wording like `fetched cell state`./nPull Diego brain logs, cell logs, and auctioneer logs and contact Pivotal Support telling them that fetching cell states is taking too long."
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - FetchStatesDuration > 5 sec."
     severity           = "Critical"
     tip                = "Check the health of the cells by reviewing the logs and looking for errors./nReview IaaS console metrics./nInspect the Auctioneer logs to determine if one or more cells is taking significantly longer to fetch state than other cells. Relevant log lines will have wording like `fetched cell state`./nPull Diego brain logs, cell logs, and auctioneer logs and contact Pivotal Support telling them that fetching cell states is taking too long."
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - LRPAuctionsStarted Historical norm deviation."
     severity           = "Warning"
     tip                = "When observing a significant amount of container churn, do the following:/nLook to eliminate explainable causes of temporary churn, such as a deployment or increased developer activity./nIf container churn appears to continue over an extended period, pull logs from the Diego Brain and BBS node before contacting Pivotal support./nWhen observing extended periods of high or low activity trends, scale up or down CF components as needed."
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - TaskAuctionsFailed - Minor."
     severity           = "Minor"
     tip                = "In order to best determine the root cause, examine the Auctioneer logs. Depending on the specific error or resource constraint, you may also find a failure reason in the CC API./nInvestigate the health of Diego cells./nConsider scaling additional cells using Ops Manager./nIf scaling cells does not solve the problem, pull Diego brain logs and BBS logs for troubleshooting and contact Pivotal Support for additional troubleshooting. Inform Pivotal Support that Task auctions are failing."
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Pivotal Cloudfoundry - TaskAuctionsFailed - Critical."
     severity           = "Critical"
     tip                = "In order to best determine the root cause, examine the Auctioneer logs. Depending on the specific error or resource constraint, you may also find a failure reason in the CC API./nInvestigate the health of Diego cells./nConsider scaling additional cells using Ops Manager./nIf scaling cells does not solve the problem, pull Diego brain logs and BBS logs for troubleshooting and contact Pivotal Support for additional troubleshooting. Inform Pivotal Support that Task auctions are failing."
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }

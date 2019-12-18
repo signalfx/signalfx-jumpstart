@@ -11,11 +11,11 @@ resource "signalfx_detector" "container_cpu_utilization" {
   rule {
     detect_label       = "Container CPU utilization % is within 70 and 80 for 10m"
     severity           = "Warning"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
   rule {
     detect_label       = "Container CPU utilization % is above 80 for 5m"
     severity           = "Major"
-    parameterized_body = "${var.message_body}"
+    parameterized_body = var.message_body
   }
 }
