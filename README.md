@@ -11,12 +11,12 @@ Clone this repository:
 $ terraform init
 ```
 
-**Create a workspace for the POC customer:**
+**Create a workspace for the prospect:**
 
 ```
-$ terraform workspace new bar
+$ terraform workspace new my_prospect
 ```
-Where `bar` is the company name of the customer
+Where `my_prospect` is the company name of the prospect
 
 **Review the execution plan:**
 
@@ -37,9 +37,9 @@ $ terraform apply -var="access_token=abc123" -var="realm=eu0"
 You will first need to ensure you are in the correct workspace for the customer e.g.
 
 ```
-$ terraform workspace select bar
+$ terraform workspace select my_prospect
 ```
-Where `bar` is the company name of the customer
+Where `my_prospect` is the company name of the prospect
 
 ```
 $ terraform destroy -var="access_token=abc123" -var="realm=eu0"
