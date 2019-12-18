@@ -1,8 +1,8 @@
-# POC in a Box
+# SignalFx Jumpstart
 
 Clone this repository:
 
-`git clone https://github.com/signalfx/poc-in-a-box.git`
+`git clone https://github.com/signalfx/signalfx-jumpstart.git`
 
 **Initialise Terraform:**
 
