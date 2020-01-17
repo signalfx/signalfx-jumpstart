@@ -23,6 +23,10 @@ module "usage_dashboard" {
   source = "./dashboards/usage"
 }
 
+module "parent_child_dashboard" {
+  source = "./dashboards/parent"
+}
+
 module "gcp" {
   source = "./gcp"
 }
