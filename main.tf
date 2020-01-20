@@ -1,5 +1,5 @@
 provider "signalfx" {
-  auth_token = var.access_token
+  auth_token = "var.access_token"
   api_url    = "https://api.${var.realm}.signalfx.com"
 }
 
@@ -38,3 +38,4 @@ module "kubernetes" {
 module "pivotal" {
   source = "./pivotal"
 }
+
