@@ -1,5 +1,5 @@
 resource "signalfx_detector" "k8s_pod_status" {
-  name         = "[SFx] K8S Pod Waiting Status"
+  name         = "${var.sfx_prefix} K8S Pod Waiting Status"
   description  = "Alerts when more pods than normal are in a waiting state"
   program_text = <<-EOF
     from signalfx.detectors.against_recent import against_recent
@@ -14,7 +14,7 @@ resource "signalfx_detector" "k8s_pod_status" {
 }
 
 resource "signalfx_detector" "k8s_pods_active" {
-  name         = "[SFx] K8S Pods active"
+  name         = "${var.sfx_prefix} K8S Pods active"
   description  = "Alerts when number of actrive pods changed significantly"
   program_text = <<-EOF
     from signalfx.detectors.against_recent import against_recent
@@ -29,7 +29,7 @@ resource "signalfx_detector" "k8s_pods_active" {
 }
 
 resource "signalfx_detector" "k8s_pods_failed_pending_ratio" {
-  name         = "[SFx] K8S Pod Phase Failed/Pending"
+  name         = "${var.sfx_prefix} K8S Pod Phase Failed/Pending"
   description  = "Alerts when more Pods are in failed and pending phase than normal"
   program_text = <<-EOF
     from signalfx.detectors.against_recent import against_recent

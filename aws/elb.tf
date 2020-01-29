@@ -1,5 +1,5 @@
 resource "signalfx_detector" "httpcode_elb_5xx" {
-  name        = "[SFx] AWS/ELB has high 5XX response ratio"
+  name        = "${var.sfx_prefix} AWS/ELB has high 5XX response ratio"
   description = "Alerts when 10% of requests were 5XX for last 5m"
 
   program_text = <<-EOF

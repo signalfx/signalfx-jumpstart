@@ -1,6 +1,6 @@
 /*
 resource "signalfx_detector" "k8s_cluster_cpu_capacity" {
-  name         = "[SFx] K8S Cluster CPU Capacity approaching limit"
+  name         = "${var.sfx_prefix} K8S Cluster CPU Capacity approaching limit"
   description  = "Alerts when Cluster is approaching CPU capacity"
   program_text = <<-EOF
     A = data('container_cpu_percent', filter=filter('kubernetes_cluster', '*') and filter('kubernetes_namespace', '*') and filter('sf_tags', '*', match_missing=True) and filter('deployment', '*', match_missing=True), rollup='rate').sum(by=['kubernetes_cluster']).scale(0.01).publish(label='A')
@@ -16,7 +16,7 @@ resource "signalfx_detector" "k8s_cluster_cpu_capacity" {
 */
 
 resource "signalfx_detector" "k8s_cluster_memory_overcommitted" {
-  name         = "[SFx] K8S Cluster Memory Overcommitted"
+  name         = "${var.sfx_prefix} K8S Cluster Memory Overcommitted"
   description  = "Alerts when cluster has overcommitted memory requests and cannot tolerate node failure."
   program_text = <<-EOF
     A = data('kube_node_status_allocatable_memory_bytes', filter=(not filter('azure_resource_id', '*')) and filter('kubernetes_cluster', '*'), rollup='sum').sum(by=['kubernetes_cluster']).publish(label='A', enable=False)
@@ -33,7 +33,7 @@ resource "signalfx_detector" "k8s_cluster_memory_overcommitted" {
 }
 
 resource "signalfx_detector" "k8s_daemonset_ready_vs_scheduled" {
-  name         = "[SFx] K8S Cluster DaemonSet ready vs scheduled"
+  name         = "${var.sfx_prefix} K8S Cluster DaemonSet ready vs scheduled"
   description  = "Alerts when number of ready and scheduled DaemonSets have diverged"
   program_text = <<-EOF
     A = data('kube_daemonset_status_number_ready', filter=filter('kubernetes_cluster', '*') and filter('daemonset', '*')).sum(by=['kubernetes_cluster', 'daemonset']).publish(label='A', enable=False)

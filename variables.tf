@@ -6,3 +6,8 @@ variable "realm" {
   description = "SignalFx Realm"
 }
 
+variable "sfx_prefix" {
+  type        = string
+  description = "Detector Prefix"
+  default     = "[SFx]"
+}

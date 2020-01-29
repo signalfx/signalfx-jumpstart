@@ -32,3 +32,8 @@ variable "message_body" {
     {{/if}}
   EOF
 }
+
+variable "sfx_prefix" {
+  type        = string
+  description = "Detector Prefix"
+}

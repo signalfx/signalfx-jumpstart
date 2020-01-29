@@ -1,5 +1,5 @@
 resource "signalfx_detector" "pivotal_cloudfoundry_diego_errors" {
-  name         = "[SFx] Pivotal CloudFoundry Diego errors"
+  name         = "${var.sfx_prefix} Pivotal CloudFoundry Diego errors"
   description  = "Alerts for various Pivotal CloudFoundry Diego related error scenarios"
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods

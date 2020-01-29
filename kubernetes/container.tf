@@ -1,5 +1,5 @@
 resource "signalfx_detector" "k8s_container_restarts" {
-  name         = "[SFx] K8S Container restart count is higher than normal"
+  name         = "${var.sfx_prefix} K8S Container restart count is higher than normal"
   description  = "Container restart count in the last 5m are more than 2.5 standard deviations above the mean of its preceding 30m"
   program_text = <<-EOF
     from signalfx.detectors.against_recent import against_recent
@@ -14,7 +14,7 @@ resource "signalfx_detector" "k8s_container_restarts" {
 }
 
 resource "signalfx_detector" "k8s_container_cpu" {
-  name         = "[SFx] K8S Container CPU utilization is higher than normal, and increasing"
+  name         = "${var.sfx_prefix} K8S Container CPU utilization is higher than normal, and increasing"
   description  = "Alerts when container CPU utilization (%) in the last 5m is more than 2.5 standard deviations above the mean of its preceding 30m"
   program_text = <<-EOF
     from signalfx.detectors.against_recent import against_recent
@@ -30,7 +30,7 @@ resource "signalfx_detector" "k8s_container_cpu" {
 }
 
 resource "signalfx_detector" "k8s_container_memory" {
-  name         = "[SFx] K8S Container top 5 memory utilization is higher than normal, and increasing"
+  name         = "${var.sfx_prefix} K8S Container top 5 memory utilization is higher than normal, and increasing"
   description  = "Alerts when container memory utilization of top 5 in the last 15m is more than 3.5 standard deviations above the median of similar signals for 100% of 15m"
   program_text = <<-EOF
 from signalfx.detectors.population_comparison import population

@@ -1,6 +1,6 @@
 /*
 resource "signalfx_detector" "k8s_node_cpu_imbalance" {
-  name         = "[SFx] K8S Cluster CPU balance"
+  name         = "${var.sfx_prefix} K8S Cluster CPU balance"
   description  = "Alerts when cluster CPU usage is imbalanced"
   program_text = <<-EOF
     A = data('container_cpu_utilization', filter=filter('kubernetes_cluster', '*') and filter('kubernetes_node', '*'), rollup='rate').sum(by=['kubernetes_node', 'kubernetes_cluster']).publish(label='A', enable=False)

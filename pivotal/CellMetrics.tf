@@ -1,5 +1,5 @@
 resource "signalfx_detector" "pivotal_cloudfoundry_DCM_errors" {
-  name         = "[SFx] Pivotal CloudFoundry Diego Cell Metrics errors"
+  name         = "${var.sfx_prefix} Pivotal CloudFoundry Diego Cell Metrics errors"
   description  = "Alerts for various Pivotal CloudFoundry Diego Cell Metrics related error scenarios"
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods

@@ -4,38 +4,47 @@ provider "signalfx" {
 }
 
 module "aws" {
-  source = "./aws"
+  source     = "./aws"
+  sfx_prefix = var.sfx_prefix
 }
 
 module "host" {
-  source = "./host"
+  source     = "./host"
+  sfx_prefix = var.sfx_prefix
+
 }
 
 module "azure" {
-  source = "./azure"
+  source     = "./azure"
+  sfx_prefix = var.sfx_prefix
 }
 
 module "docker" {
-  source = "./docker"
+  source     = "./docker"
+  sfx_prefix = var.sfx_prefix
 }
 
 module "usage_dashboard" {
-  source = "./dashboards/usage"
+  source     = "./dashboards/usage"
+  sfx_prefix = var.sfx_prefix
 }
 
 module "parent_child_dashboard" {
-  source = "./dashboards/parent"
+  source     = "./dashboards/parent"
+  sfx_prefix = var.sfx_prefix
 }
 
 module "gcp" {
-  source = "./gcp"
+  source     = "./gcp"
+  sfx_prefix = var.sfx_prefix
 }
 
 module "kubernetes" {
-  source = "./kubernetes"
+  source     = "./kubernetes"
+  sfx_prefix = var.sfx_prefix
 }
 
 module "pivotal" {
-  source = "./pivotal"
+  source     = "./pivotal"
+  sfx_prefix = var.sfx_prefix
 }
-
