@@ -32,7 +32,7 @@ Where `access_token` is the SignalFx Access Token and `realm` is either `eu0`, `
 $ terraform apply -var="access_token=abc123" -var="realm=eu0"
 ```
 
-**Destory all detectors**
+**Destroy all detectors**
 
 You will first need to ensure you are in the correct workspace for the customer e.g.
 
