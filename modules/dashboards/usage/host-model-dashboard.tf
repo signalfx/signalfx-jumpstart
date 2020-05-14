@@ -2,7 +2,7 @@ resource "signalfx_dashboard" "hostbasedmodel0" {
   name            = "Host Based Model"
   dashboard_group = signalfx_dashboard_group.usageoverview0.id
 
-  time_range = "-1w"
+  time_range = "-1h"
 
   chart {
     chart_id = signalfx_text_chart.title0.id
