@@ -1,104 +1,4 @@
-resource "signalfx_dashboard" "hostbasedmodel0" {
-  name            = "Host Based Model"
-  dashboard_group = signalfx_dashboard_group.usageoverview0.id
-
-  time_range = "-1h"
-
-  chart {
-    chart_id = signalfx_text_chart.title0.id
-    width    = 12
-    height   = 1
-    row      = 1
-    column   = 0
-  }
-  chart {
-    chart_id = signalfx_single_value_chart.hostcount0.id
-    width    = 3
-    height   = 1
-    row      = 2
-    column   = 0
-  }
-  chart {
-    chart_id = signalfx_single_value_chart.containercount0.id
-    width    = 3
-    height   = 1
-    row      = 2
-    column   = 3
-  }
-  chart {
-    chart_id = signalfx_single_value_chart.custommetrics0.id
-    width    = 3
-    height   = 1
-    row      = 2
-    column   = 6
-  }
-  chart {
-    chart_id = signalfx_single_value_chart.hiresmetrics0.id
-    width    = 3
-    height   = 1
-    row      = 2
-    column   = 9
-  }
-  chart {
-    chart_id = signalfx_time_chart.hosttrend0.id
-    width    = 3
-    height   = 1
-    row      = 3
-    column   = 0
-  }
-  chart {
-    chart_id = signalfx_time_chart.containertrend0.id
-    width    = 3
-    height   = 1
-    row      = 3
-    column   = 3
-  }
-  chart {
-    chart_id = signalfx_time_chart.custommetrictrend0.id
-    width    = 3
-    height   = 1
-    row      = 3
-    column   = 6
-  }
-  chart {
-    chart_id = signalfx_time_chart.hiresmetrictrend0.id
-    width    = 3
-    height   = 1
-    row      = 3
-    column   = 9
-  }
-
-  chart {
-    chart_id = signalfx_text_chart.hostinfo0.id
-    width    = 3
-    height   = 1
-    row      = 4
-    column   = 0
-  }
-  chart {
-    chart_id = signalfx_text_chart.containerinfo0.id
-    width    = 3
-    height   = 1
-    row      = 4
-    column   = 3
-  }
-  chart {
-    chart_id = signalfx_text_chart.custommetricinfo0.id
-    width    = 3
-    height   = 1
-    row      = 4
-    column   = 6
-  }
-  chart {
-    chart_id = signalfx_text_chart.hiresmetricinfo0.id
-    width    = 3
-    height   = 1
-    row      = 4
-    column   = 9
-  }
-}
-
-resource "signalfx_text_chart" "title0" {
+resource "signalfx_text_chart" "title_1" {
   name     = " "
   markdown = <<-EOF
     <table width="100%" rules="none">
@@ -115,7 +15,7 @@ resource "signalfx_text_chart" "title0" {
     </tbody></table>
   EOF
 }
-resource "signalfx_single_value_chart" "hostcount0" {
+resource "signalfx_single_value_chart" "hostcount_2" {
   name         = "Host Count"
   description  = "Number of Hosts SignalFx has seen in last 10 minutes"
   program_text = <<-EOF
@@ -129,7 +29,7 @@ resource "signalfx_single_value_chart" "hostcount0" {
   max_precision = 3
 }
 
-resource "signalfx_time_chart" "hosttrend0" {
+resource "signalfx_time_chart" "hosttrend_3" {
   name         = "Hosts Count - Trend"
   description  = "Host count (blue), % week-on-week growth (brown)"
   program_text = <<-EOF
@@ -157,7 +57,7 @@ resource "signalfx_time_chart" "hosttrend0" {
   }
 }
 
-resource "signalfx_text_chart" "hostinfo0" {
+resource "signalfx_text_chart" "hostinfo_4" {
   name     = "Host - Info"
   markdown = <<-EOF
     The chart above shows Host count.
@@ -171,7 +71,7 @@ resource "signalfx_text_chart" "hostinfo0" {
     Number of Hosts being monitored in your organization.
   EOF
 }
-resource "signalfx_single_value_chart" "containercount0" {
+resource "signalfx_single_value_chart" "containercount_5" {
   name         = "Container Count"
   description  = "Number of Containers SignalFx has seen in last 10 minutes"
   program_text = <<-EOF
@@ -185,7 +85,7 @@ resource "signalfx_single_value_chart" "containercount0" {
   max_precision = 3
 }
 
-resource "signalfx_time_chart" "containertrend0" {
+resource "signalfx_time_chart" "containertrend_6" {
   name         = "Containers Count - Trend"
   description  = "Container count (blue), % week-on-week growth (brown)"
   program_text = <<-EOF
@@ -212,7 +112,7 @@ resource "signalfx_time_chart" "containertrend0" {
     axis  = "right"
   }
 }
-resource "signalfx_text_chart" "containerinfo0" {
+resource "signalfx_text_chart" "containerinfo_7" {
   name     = "Container - Info"
   markdown = <<-EOF
     The chart above shows Container count.
@@ -224,7 +124,7 @@ resource "signalfx_text_chart" "containerinfo0" {
   EOF
 }
 
-resource "signalfx_single_value_chart" "custommetrics0" {
+resource "signalfx_single_value_chart" "custommetrics_8" {
   name         = "Custom Metrics"
   description  = "Number of Custom Metrics SignalFx has seen in last 10 minutes"
   program_text = <<-EOF
@@ -238,7 +138,7 @@ resource "signalfx_single_value_chart" "custommetrics0" {
   max_precision = 3
 }
 
-resource "signalfx_time_chart" "custommetrictrend0" {
+resource "signalfx_time_chart" "custommetrictrend_9" {
   name         = "Custom Metrics - Trend"
   description  = "Custom Metrics (blue), % week-on-week growth (brown)"
   program_text = <<-EOF
@@ -265,7 +165,7 @@ resource "signalfx_time_chart" "custommetrictrend0" {
     axis  = "right"
   }
 }
-resource "signalfx_text_chart" "custommetricinfo0" {
+resource "signalfx_text_chart" "custommetricinfo_10" {
   name     = "Custom Metric - Info"
   markdown = <<-EOF
     The chart above shows Custom Metric count.
@@ -276,7 +176,7 @@ resource "signalfx_text_chart" "custommetricinfo0" {
     Number of Custom Metrics being monitored in your organization.
   EOF
 }
-resource "signalfx_single_value_chart" "hiresmetrics0" {
+resource "signalfx_single_value_chart" "hiresmetrics_11" {
   name         = "Hi-Res Metrics"
   description  = "Number of Hi-Res Metrics SignalFx has seen in last 10 minutes"
   program_text = <<-EOF
@@ -290,7 +190,7 @@ resource "signalfx_single_value_chart" "hiresmetrics0" {
   max_precision = 3
 }
 
-resource "signalfx_time_chart" "hiresmetrictrend0" {
+resource "signalfx_time_chart" "hiresmetrictrend_12" {
   name         = "Hi-Res Metrics - Trend"
   description  = "Hi-Res Metrics (blue), % week-on-week growth (brown)"
   program_text = <<-EOF
@@ -317,7 +217,7 @@ resource "signalfx_time_chart" "hiresmetrictrend0" {
     axis  = "right"
   }
 }
-resource "signalfx_text_chart" "hiresmetricinfo0" {
+resource "signalfx_text_chart" "hiresmetricinfo_13" {
   name     = "Hi-Res Metric - Info"
   markdown = <<-EOF
     The chart above shows Hi-Res Metrics count.
@@ -327,4 +227,103 @@ resource "signalfx_text_chart" "hiresmetricinfo0" {
 
     Number of Hi-Res Metrics being monitored in your organization.
   EOF
+}
+
+resource "signalfx_dashboard" "hostbasedmodel" {
+  name            = "Host Based Model"
+  dashboard_group = signalfx_dashboard_group.usageoverview.id
+
+  time_range = "-1h"
+
+  chart {
+    chart_id = signalfx_text_chart.title_1.id
+    width    = 12
+    height   = 1
+    row      = 1
+    column   = 0
+  }
+  chart {
+    chart_id = signalfx_single_value_chart.hostcount_2.id
+    width    = 3
+    height   = 1
+    row      = 2
+    column   = 0
+  }
+  chart {
+    chart_id = signalfx_time_chart.hosttrend_3.id
+    width    = 3
+    height   = 1
+    row      = 3
+    column   = 0
+  }
+  chart {
+    chart_id = signalfx_text_chart.hostinfo_4.id
+    width    = 3
+    height   = 1
+    row      = 4
+    column   = 0
+  }
+  chart {
+    chart_id = signalfx_single_value_chart.containercount_5.id
+    width    = 3
+    height   = 1
+    row      = 2
+    column   = 3
+  }
+  chart {
+    chart_id = signalfx_time_chart.containertrend_6.id
+    width    = 3
+    height   = 1
+    row      = 3
+    column   = 3
+  }
+  chart {
+    chart_id = signalfx_text_chart.containerinfo_7.id
+    width    = 3
+    height   = 1
+    row      = 4
+    column   = 3
+  }
+  chart {
+    chart_id = signalfx_single_value_chart.custommetrics_8.id
+    width    = 3
+    height   = 1
+    row      = 2
+    column   = 6
+  }
+  chart {
+    chart_id = signalfx_time_chart.custommetrictrend_9.id
+    width    = 3
+    height   = 1
+    row      = 3
+    column   = 6
+  }
+  chart {
+    chart_id = signalfx_text_chart.custommetricinfo_10.id
+    width    = 3
+    height   = 1
+    row      = 4
+    column   = 6
+  }
+  chart {
+    chart_id = signalfx_single_value_chart.hiresmetrics_11.id
+    width    = 3
+    height   = 1
+    row      = 2
+    column   = 9
+  }
+  chart {
+    chart_id = signalfx_time_chart.hiresmetrictrend_12.id
+    width    = 3
+    height   = 1
+    row      = 3
+    column   = 9
+  }
+  chart {
+    chart_id = signalfx_text_chart.hiresmetricinfo_13.id
+    width    = 3
+    height   = 1
+    row      = 4
+    column   = 9
+  }
 }
