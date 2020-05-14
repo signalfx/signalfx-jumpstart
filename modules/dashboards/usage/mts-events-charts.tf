@@ -19,7 +19,7 @@ resource "signalfx_single_value_chart" "mtscreationrate0" {
   name         = "Real-Time MTS Creation Rate"
   description  = "Number of metric time series created in last minute"
   program_text = <<-EOF
-    data('sf.org.numMetricTimeSeriesCreated').sum().mean(over='1m').scale(60).publish(label='A')
+    A = data('sf.org.numMetricTimeSeriesCreated').sum().mean(over='1m').scale(60).publish(label='A')
   EOF
   viz_options {
     label        = "A"
@@ -70,7 +70,7 @@ resource "signalfx_single_value_chart" "epm0" {
   name         = "Real-Time EPM"
   description  = "Number of events SignalFx received in last minute"
   program_text = <<-EOF
-    data('sf.org.numEventsIngested').sum().mean(over='1m').scale(60).publish(label='A')
+    A = data('sf.org.numEventsIngested').sum().mean(over='1m').scale(60).publish(label='A')
   EOF
   viz_options {
     label        = "A"
@@ -121,7 +121,7 @@ resource "signalfx_single_value_chart" "etscreationrate0" {
   name         = "Real-Time ETS Creation Rate"
   description  = "Number of event time series created in last minute"
   program_text = <<-EOF
-    data('sf.org.numEventTimeSeriesCreated').sum().mean(over='1m').scale(60).publish(label='A')
+    A = data('sf.org.numEventTimeSeriesCreated').sum().mean(over='1m').scale(60).publish(label='A')
   EOF
   viz_options {
     label        = "A"

@@ -19,7 +19,7 @@ resource "signalfx_single_value_chart" "hostcount0" {
   name         = "Host Count"
   description  = "Number of Hosts SignalFx has seen in last 10 minutes"
   program_text = <<-EOF
-    data('sf.org.numResourcesMonitored', filter=filter('resourceType', 'host')).publish(label='A')
+    A = data('sf.org.numResourcesMonitored', filter=filter('resourceType', 'host')).publish(label='A')
   EOF
   viz_options {
     label        = "A"
@@ -75,7 +75,7 @@ resource "signalfx_single_value_chart" "containercount0" {
   name         = "Container Count"
   description  = "Number of Containers SignalFx has seen in last 10 minutes"
   program_text = <<-EOF
-    data('sf.org.numResourcesMonitored', filter=filter('resourceType', 'container')).publish(label='A')
+    A = data('sf.org.numResourcesMonitored', filter=filter('resourceType', 'container')).publish(label='A')
   EOF
   viz_options {
     label        = "A"
@@ -128,7 +128,7 @@ resource "signalfx_single_value_chart" "custommetrics0" {
   name         = "Custom Metrics"
   description  = "Number of Custom Metrics SignalFx has seen in last 10 minutes"
   program_text = <<-EOF
-    data('sf.org.numCustomMetrics').publish(label='A')
+    A = data('sf.org.numCustomMetrics').publish(label='A')
   EOF
   viz_options {
     label        = "A"
@@ -180,7 +180,7 @@ resource "signalfx_single_value_chart" "hiresmetrics0" {
   name         = "Hi-Res Metrics"
   description  = "Number of Hi-Res Metrics SignalFx has seen in last 10 minutes"
   program_text = <<-EOF
-    data('sf.org.numHighResolutionMetrics').publish(label='A')
+    A = data('sf.org.numHighResolutionMetrics').publish(label='A')
   EOF
   viz_options {
     label        = "A"

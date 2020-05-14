@@ -2,7 +2,7 @@ resource "signalfx_dashboard" "mtsevents0" {
   name            = "MTS & Event Usage"
   dashboard_group = signalfx_dashboard_group.usageoverview0.id
 
-  time_range = "-1w"
+  time_range = "-1h"
 
   chart {
     chart_id = signalfx_text_chart.title1.id
