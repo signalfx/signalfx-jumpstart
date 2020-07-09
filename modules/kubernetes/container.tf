@@ -1,13 +1,12 @@
 resource "signalfx_detector" "k8s_container_restarts" {
-  name         = "${var.sfx_prefix} K8S Container restart count is higher than normal"
-  description  = "Container restart count in the last 5m are more than 2.5 standard deviations above the mean of its preceding 30m"
+  name         = "${var.sfx_prefix} K8S Container restart count is > 0"
+  description  = "Container restart count in the last 5m is > 0"
   program_text = <<-EOF
-    from signalfx.detectors.against_recent import against_recent
-    A = data('kubernetes.container_restart_count', filter=filter('kubernetes_cluster', '*') and filter('kubernetes_namespace', '*') and filter('deployment', '*', match_missing=True)).sum(by=['kubernetes_cluster', 'kubernetes_namespace', 'kubernetes_pod_name']).publish(label='A')
-    against_recent.detector_mean_std(stream=A, current_window='5m', historical_window='30m', fire_num_stddev=2.5, clear_num_stddev=2, orientation='above', ignore_extremes=True, calculation_mode='vanilla').publish('K8S Container restart count is higher than normal')
+    A = data('kubernetes.container_restart_count').sum(by=['kubernetes_cluster', 'kubernetes_namespace', 'kubernetes_pod_name']).delta().sum(over='5m').above(0, inclusive=True, clamp=True).publish(label='A')
+    detect(when(A > threshold(0), lasting='5m')).publish('K8S Container restart count is > 0')
   EOF
   rule {
-    detect_label       = "K8S Container restart count is higher than normal"
+    detect_label       = "K8S Container restart count is > 0"
     severity           = "Warning"
     parameterized_body = var.message_body
   }
