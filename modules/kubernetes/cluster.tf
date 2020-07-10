@@ -13,7 +13,7 @@ resource "signalfx_detector" "k8s_cluster_cpu_capacity" {
     disabled = true
   }
 }
-*/
+
 
 resource "signalfx_detector" "k8s_cluster_memory_overcommitted" {
   name         = "${var.sfx_prefix} K8S Cluster Memory Overcommitted"
@@ -31,6 +31,7 @@ resource "signalfx_detector" "k8s_cluster_memory_overcommitted" {
     parameterized_body = var.message_body
   }
 }
+*/
 
 resource "signalfx_detector" "k8s_daemonset_ready_vs_scheduled" {
   name         = "${var.sfx_prefix} K8S Cluster DaemonSet ready vs scheduled"
@@ -43,6 +44,22 @@ resource "signalfx_detector" "k8s_daemonset_ready_vs_scheduled" {
   EOF
   rule {
     detect_label       = "K8S Cluster DaemonSet ready and scheduled have diverged"
+    severity           = "Major"
+    parameterized_body = var.message_body
+  }
+}
+
+resource "signalfx_detector" "k8s_deployment_not_at_spec" {
+  name         = "${var.sfx_prefix} K8S Cluster Deployment is not at spec"
+  description  = "Alerts when number of ready and available pods in Deployments have diverged"
+  program_text = <<-EOF
+    A = data('kubernetes.deployment.available').sum(by=['kubernetes_cluster', 'deployment', 'kubernetes_namespace']).publish(label='A', enable=False)
+    B = data('kubernetes.deployment.desired').sum(by=['kubernetes_cluster', 'deployment', 'kubernetes_namespace']).publish(label='B', enable=False)
+    C = (A-B).publish(label='C')
+    detect((when((C > 0) or (C < 0), lasting='5m', at_least=0.8))).publish('K8S Cluster Deployment is not at spec')
+  EOF
+  rule {
+    detect_label       = "K8S Cluster Deployment is not at spec"
     severity           = "Major"
     parameterized_body = var.message_body
   }
