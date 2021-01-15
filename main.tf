@@ -14,6 +14,12 @@ module "host" {
 
 }
 
+module "kafka" {
+  source     = "./modules/kafka"
+  sfx_prefix = var.sfx_prefix
+
+}
+
 module "azure" {
   source     = "./modules/azure"
   sfx_prefix = var.sfx_prefix
