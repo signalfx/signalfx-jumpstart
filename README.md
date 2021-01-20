@@ -3,7 +3,7 @@
 
 ## Clone this repository:
 
-`git clone https://github.com/signalfx/signalfx-jumpstart.git`
+`git clone https://github.com/splunk/splunk-inframon-jumpstart.git`
 
 ## Initialise Terraform
 
@@ -51,4 +51,5 @@ $ terraform destroy -var="access_token=abc123" -var="realm=eu0"
 terraform apply -var="access_token=abc123" -var="realm=eu0" -target=module.aws
 terraform apply -var="access_token=abc123" -var="realm=eu0" -target=module.dashboards
 terraform apply -var="access_token=abc123" -var="realm=eu0" -target=module.gcp
+terraform apply -var="access_token=abc123" -var="realm=eu0" -target=module.kafka
 ```
