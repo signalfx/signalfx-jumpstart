@@ -1,5 +1,5 @@
 # SignalFx Jumpstart
-**Requires Terraform (minimum) v0.13**
+**Requires Terraform (minimum) v0.14**
 
 ## Clone this repository:
 
