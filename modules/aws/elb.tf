@@ -14,3 +14,35 @@ resource "signalfx_detector" "httpcode_elb_5xx" {
     parameterized_body = var.message_body
   }
 }
+
+resource "signalfx_detector" "surgequeuelength_elb" {
+  name        = "${var.sfx_prefix} AWS/ELB has high Surge Queue Length (>= 90%)"
+  description = "Alerts when Surge Queue Length is >= 90%"
+
+  program_text = <<-EOF
+    A = data('SurgeQueueLength', filter=filter('stat', 'upper') and (not filter('AvailabilityZone', '*'))).publish(label='A')
+    detect(when((A/1024)*100 >= 90, lasting='5m')).publish('AWS/ELB SurgeQueueLength is close to capacity')    
+  EOF
+
+  rule {
+    detect_label       = "AWS/ELB SurgeQueueLength is close to capacity"
+    severity           = "Critical"
+    parameterized_body = var.message_body
+  }
+}
+
+resource "signalfx_detector" "spillover_elb" {
+  name        = "${var.sfx_prefix} AWS/ELB has spillover"
+  description = "Alerts when ELB Spillover is detected (generates 503 for users)"
+
+  program_text = <<-EOF
+    A = data('SpilloverCount', filter=filter('stat', 'sum') and filter('namespace', 'AWS/ELB') and (not filter('AvailabilityZone', '*'))).publish(label='A')
+    detect(when(A > 0)).publish('AWS/ELB Spillover detected')    
+  EOF
+
+  rule {
+    detect_label       = "AWS/ELB Spillover detected"
+    severity           = "Critical"
+    parameterized_body = var.message_body
+  }
+}
