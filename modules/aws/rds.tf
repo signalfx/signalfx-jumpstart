@@ -13,15 +13,15 @@ resource "signalfx_detector" "rds_free_space" {
   }
 }
 resource "signalfx_detector" "rds_DiskQueueDepth_historical_error" {
-  name         = "${var.sfx_prefix} AWS/RDS rds_DiskQueueDepth for the last 10 minutes where significantly higher than normal, as compared to the last 12 hours"
+  name         = "${var.sfx_prefix} AWS/RDS rds_DiskQueueDepth for the last 10 minutes where significantly higher than normal, as compared to the mean from the last 2 days"
   description  = "Alerts when the number of outstanding IOs (read/write requests) in AWS/RD was significantly higher than normal for 10 minutes, as compared to the last 12 hours"
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
-    A = data('DiskQueueDepth', filter=filter('namespace', 'AWS/RDS')).mean_plus_stddev(stddevs=1, over='10m').publish(label='A', enable=False)
-    against_periods.detector_mean_std(stream=A, window_to_compare='30m', space_between_windows='12h', num_windows=4, fire_num_stddev=10, clear_num_stddev=3, discard_historical_outliers=True, orientation='above').publish('AWS/RDS outstanding IOs (read/write requests) for the last 10 minutes where significantly higher than normal, as compared to the last 12 hours')
+    A = data('DiskQueueDepth', filter=filter('DBInstanceIdentifier', '*') and filter('namespace', 'AWS/RDS') and filter('stat', 'mean')).publish(label='A')
+    against_periods.detector_mean_std(stream=A, window_to_compare='30m', space_between_windows='12h', num_windows=4, fire_num_stddev=3, clear_num_stddev=1, discard_historical_outliers=True, orientation='above').publish('Disk Queue Depth higher than normal')
   EOF
   rule {
-    detect_label       = "AWS/RDS outstanding IOs (read/write requests) for the last 10 minutes where significantly higher than normal, as compared to the last 12 hours"
+    detect_label       = "Disk Queue Depth higher than normal"
     severity           = "Minor"
     parameterized_body = var.message_body
   }
@@ -71,14 +71,30 @@ resource "signalfx_detector" "rds_deadlocks" {
 }
 
 resource "signalfx_detector" "rds_read_latency" {
-  name         = "${var.sfx_prefix} AWS/RDS Latency "
-  description  = "Alerts when AWS/RDS read latency is above 100ms for at least 5 seconds"
+  name         = "${var.sfx_prefix} AWS/RDS Read Latency "
+  description  = "Alerts when AWS/RDS read latency is greater than normal compared to the last 2 days"
   program_text = <<-EOF
-  ReadLatency = data('ReadLatency', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*')).mean(by=['aws_account_id', 'aws_region', 'DBInstanceIdentifier']).scale(1000).max().publish(label='ReadLatency', enable=False)
-  detect(when(ReadLatency > 100, lasting='5s')).publish('AWS/RDS read latency has been above 100ms for at least 5 seconds')
+    from signalfx.detectors.against_periods import against_periods
+    A = data('ReadLatency', filter=filter('DBInstanceIdentifier', '*') and filter('namespace', 'AWS/RDS') and filter('stat', 'mean')).publish(label='A')
+    against_periods.detector_mean_std(stream=A, window_to_compare='30m', space_between_windows='12h', num_windows=4, fire_num_stddev=3, clear_num_stddev=1, discard_historical_outliers=True, orientation='above').publish('Read Latency higher than normal')
   EOF
   rule {
-    detect_label       = "AWS/RDS read latency has been above 100ms for at least 5 seconds"
+    detect_label       = "Read Latency higher than normal"
+    severity           = "Major"
+    parameterized_body = var.message_body
+  }
+}
+
+resource "signalfx_detector" "rds_write_latency" {
+  name         = "${var.sfx_prefix} AWS/RDS Write Latency "
+  description  = "Alerts when AWS/RDS write latency is greater than normal compared to the last 2 days"
+  program_text = <<-EOF
+    from signalfx.detectors.against_periods import against_periods
+    A = data('WriteLatency', filter=filter('DBInstanceIdentifier', '*') and filter('namespace', 'AWS/RDS') and filter('stat', 'mean')).publish(label='A')
+    against_periods.detector_mean_std(stream=A, window_to_compare='30m', space_between_windows='12h', num_windows=4, fire_num_stddev=3, clear_num_stddev=1, discard_historical_outliers=True, orientation='above').publish('Write Latency higher than normal')
+  EOF
+  rule {
+    detect_label       = "Write Latency higher than normal"
     severity           = "Major"
     parameterized_body = var.message_body
   }
