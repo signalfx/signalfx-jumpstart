@@ -24,7 +24,7 @@ Where `my_prospect` is the company name of the prospect
 $ terraform plan -var="access_token=abc123" -var="realm=eu0"
 ```
 
-Where `access_token` is the SignalFx Access Token and `realm` is either `eu0`, `us0`, `us1` or `us2`
+Where `access_token` is the Splunk Access Token and `realm` is either `eu0`, `us0`, `us1` or `us2`
 
 ## Apply the changes
 
