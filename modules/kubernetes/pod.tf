@@ -3,7 +3,7 @@ resource "signalfx_detector" "k8s_pods_active" {
   description  = "Alerts when number of active pods changed significantly"
   program_text = <<-EOF
     from signalfx.detectors.against_recent import against_recent
-    A = data('container_cpu_utilization', filter=filter('kubernetes_cluster', '*') and filter('kubernetes_namespace', '*') and filter('deployment', '*', match_missing=True) and filter('sf_tags', '*', match_missing=True)).sum(by=['kubernetes_cluster', 'kubernetes_namespace', 'kubernetes_pod_uid']).count().publish(label='A', enable=False)
+    A = data('container_cpu_utilization', filter=filter('k8s.cluster.name', '*') and filter('k8s.namespace.name', '*') and filter('k8s.deployment.name', '*', match_missing=True)).sum(by=['k8s.cluster.name', 'k8s.namespace.name', 'k8s.pod.uid']).count().publish(label='A', enable=False)
     against_recent.detector_mean_std(stream=A, current_window='10m', historical_window='1h', fire_num_stddev=3.5, clear_num_stddev=3, orientation='out_of_band', ignore_extremes=True, calculation_mode='vanilla').publish('K8S Pods active changed significantly')
   EOF
   rule {
@@ -18,10 +18,10 @@ resource "signalfx_detector" "k8s_pods_failed_pending_ratio" {
   description  = "Alerts when more Pods are in failed and pending phase than normal"
   program_text = <<-EOF
     from signalfx.detectors.against_recent import against_recent
-    A = data('kubernetes.pod_phase', filter=filter('kubernetes_cluster', '*') and filter('kubernetes_namespace', '*') and filter('metric_source', 'kubernetes')).below(1, inclusive=True).count(by=['kubernetes_cluster', 'kubernetes_namespace']).publish(label='A')
-    B = data('kubernetes.pod_phase', filter=filter('metric_source', 'kubernetes') and filter('kubernetes_cluster', '*') and filter('kubernetes_namespace', '*')).above(4, inclusive=True).count(by=['kubernetes_cluster', 'kubernetes_namespace']).publish(label='B')
-    D = data('kubernetes.pod_phase', filter=filter('kubernetes_cluster', '*') and filter('kubernetes_namespace', '*') and filter('metric_source', 'kubernetes')).count(by=['kubernetes_cluster', 'kubernetes_namespace']).publish(label='D')
-    E = ((A+B/D)*100).publish(label='E')
+    A = data('k8s.pod.phase', filter=filter('k8s.cluster.name', '*') and filter('k8s.namespace.name', '*') and filter('metric_source', 'kubernetes')).below(1, inclusive=True).count(by=['k8s.cluster.name', 'k8s.namespace.name']).publish(label='A')
+    B = data('k8s.pod.phase', filter=filter('metric_source', 'kubernetes') and filter('k8s.cluster.name', '*') and filter('k8s.namespace.name', '*')).above(4, inclusive=True).count(by=['k8s.cluster.name', 'k8s.namespace.name']).publish(label='B')
+    D = data('k8s.pod.phase', filter=filter('k8s.cluster.name', '*') and filter('k8s.namespace.name', '*') and filter('metric_source', 'kubernetes')).count(by=['k8s.cluster.name', 'k8s.namespace.name']).publish(label='D')
+    E = (((A+B)/D)*100).publish(label='E')
     against_recent.detector_mean_std(stream=E, current_window='5m', historical_window='30m', fire_num_stddev=2.5, clear_num_stddev=2, orientation='above', ignore_extremes=True, calculation_mode='vanilla').publish('K8S Pods failed and pending ratio')
   EOF
   rule {
@@ -30,4 +30,3 @@ resource "signalfx_detector" "k8s_pods_failed_pending_ratio" {
     parameterized_body = var.message_body
   }
 }
-
