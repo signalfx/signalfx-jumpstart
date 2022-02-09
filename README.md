@@ -3,6 +3,15 @@
 # SignalFx Jumpstart
 **Requires Terraform (minimum) v0.14**
 
+## Introduction
+This repository provides detectors, dashboard groups, and dashboards that can easily be deployed in a Splunk Observability Cloud org using Terraform. This can be useful for the assets themselves, but also as a construct for how prospects and customers can easily share assets across multiple parent/child orgs or with other customers.
+
+Also included is an [export script](./export_script) which can be used to easily export dashboards, dashboard groups, and detectors.
+
+These are complimentary to the out of the box content provided by Splunk.
+
+This repository and its assets are provided "as-is" and are not supported by Splunk.
+
 ## Clone this repository:
 
 `git clone https://github.com/signalfx/signalfx-jumpstart.git`
