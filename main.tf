@@ -54,3 +54,8 @@ module "parent_child_dashboard" {
   source     = "./modules/dashboards/parent"
   sfx_prefix = var.sfx_prefix
 }
+
+module "rum_and_synthetics_dashboard" {
+  source     = "./modules/dashboards/rum_and_synthetics"
+  sfx_prefix = var.sfx_prefix
+}
