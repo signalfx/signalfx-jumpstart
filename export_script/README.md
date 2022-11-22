@@ -19,7 +19,7 @@ pip install -r requirements.txt
 ## Usage
 
 ```
-usage: export_dashboards.py [-h] --key KEY [--api_url API_URL] --name NAME
+usage: export.py [-h] --key KEY [--api_url API_URL] --name NAME
                             [--exclude [EXCLUDES [EXCLUDES ...]]] --output
                             OUTPUT
                             (--group GROUP | --dashboard DASH | --detector DETECTOR)
@@ -43,7 +43,7 @@ optional arguments:
 Here's an example for a dashboard:
 
 ```
-python export_dashboard.py --key XXX --dashboard DjJ6MCMAgAA --name sfx_aws_sqs_queue --output ./
+python export.py --key XXX --dashboard DjJ6MCMAgAA --name sfx_aws_sqs_queue --output ./
 ```
 
 This command will recursively export each individual chart in a dashboard group and emit a dashboard definition where these charts are referred to by their Terraform resource name. The output will reside in a file called `sfx_aws_sqs_queue.tf`.
