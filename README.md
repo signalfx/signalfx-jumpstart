@@ -47,9 +47,10 @@ $ terraform apply -var="access_token=abc123" -var="realm=eu0"
 
 If you created a workspace you will first need to ensure you are in the correct workspace e.g.
 
+```bash
+terraform workspace select my_prospect
 ```
-$ terraform workspace select my_prospect
-```
+
 Where `my_prospect` is the company name of the prospect
 
 ```
