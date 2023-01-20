@@ -2,4 +2,4 @@
 
 # SignalFx Jumpstart
 
-This has now been moved to the [Contribution repository for Splunk Observability Content](https://github.com/splunk/observability-content-contrib/tree/main/monitoring-as-code/o11y-cloud-jumpstart)
+This has now been moved to the [Contribution repository for Splunk Observability Content](https://github.com/splunk/observability-content-contrib/tree/main/integration-examples/terraform-jumpstart)
